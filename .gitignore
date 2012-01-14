@@ -1,0 +1,11 @@
+# general
+.DS_Store
+
+# RubyMine
+.idea
+
+# bones
+announcement.txt
+coverage
+doc
+pkg

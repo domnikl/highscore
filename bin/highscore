@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+root = File.expand_path('../..', __FILE__)
+require File.join(root, %w[lib highscore])
+
+# Put your code here
+
