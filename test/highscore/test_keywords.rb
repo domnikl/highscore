@@ -22,7 +22,7 @@ class TestKeywords < Test::Unit::TestCase
 
     assert_instance_of(Array, ranked)
 
-    should_rank = [['Sinatra', 3], ['Ruby', 2]]
+    should_rank = [['Sinatra', 3], ['Ruby', 2], ['Highscore', 1]]
     assert_equal should_rank, ranked
   end
 

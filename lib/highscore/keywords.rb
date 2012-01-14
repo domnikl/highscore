@@ -43,7 +43,7 @@ module Highscore
     #
     def filter_low
       delete_if do |key, value|
-        value <= 1
+        value <= 0
       end
     end
 
@@ -52,7 +52,7 @@ module Highscore
     def run_blacklist
       # FIXME: add more keywords!
       delete_if do |key, value|
-        %w{the and that post add not see about using some something under our comments comment run you want for will file are with end new this use all but can your just get very data blog format out first posts second}.include? key
+        %w{the and that post add not see about using some something under our comments comment run you want for will file are with end new this use all but can your just get very data blog format out first they posts second}.include? key.downcase
       end
     end
   end
