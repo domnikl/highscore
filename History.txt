@@ -1,3 +1,7 @@
+== 0.2.1 / 2012-01-15
+
+* added parameter multiplier to set a general multiplier for the ranking
+
 == 0.2.0 / 2012-01-14
 
 * added configure() and parameters to influence emphasizing

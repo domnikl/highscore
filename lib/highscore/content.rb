@@ -8,7 +8,12 @@ module Highscore
     def initialize content
       @content = content
 
-      @emphasis = {:upper_case => 3, :long_words => 2, :long_words_threshold => 15}
+      @emphasis = {
+        :multiplier => 1.0,
+        :upper_case => 3.0,
+        :long_words => 2.0,
+        :long_words_threshold => 15
+      }
     end
 
     # configure ranking
@@ -32,7 +37,7 @@ module Highscore
       keywords = Keywords.new(0)
 
       find_keywords.each do |k|
-        weight = 1.0
+        weight = @emphasis[:multiplier]
 
         if k.length >= @emphasis[:long_words_threshold]
           weight *= @emphasis[:long_words]
