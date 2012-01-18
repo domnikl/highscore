@@ -6,12 +6,21 @@ Rank keywords in long texts.
 Features
 --------
 
-* FIXME (list of features and unsolved problems)
+* configureable to rank different types of words different (uppercase, long words, etc.)
 
 Examples
 --------
 
-    FIXME (code sample of usage)
+    text = Highscore::Content.new "foo bar"
+    text.configure.do 
+      set :multiplier, 2
+      set :upper_case, 3
+      set :long_words, 2
+      set :long_words_threshold, 15
+    end
+
+    text.keywords # => Hash
+    text.keywords.top(50) # => Array
 
 Requirements
 ------------
@@ -26,7 +35,7 @@ Install
 Author
 ------
 
-Original author: Dominik Liebler
+Original author: Dominik Liebler <liebler.dominik@googlemail.com>
 
 License
 -------
