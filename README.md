@@ -19,8 +19,15 @@ Examples
       set :long_words_threshold, 15
     end
 
-    text.keywords # => Hash
-    text.keywords.top(50) # => Array
+    # get all keywords
+    text.keywords.rank => Array
+
+    # get the top 50 keywords
+    text.keywords.top(50).each do |keyword|
+      keyword.text   # => keyword text
+      keyword.weight # => rank weight (float)
+    end
+
 
 Requirements
 ------------
