@@ -15,4 +15,11 @@ class TestContent < Test::Unit::TestCase
   def test_keywords
     assert_instance_of(Highscore::Keywords, @content.keywords)
   end
+
+  def test_multiple_keywords
+    content = 'Ruby Ruby Ruby and so forth ...'
+
+    content = Highscore::Content.new content
+    assert_equal 2, content.keywords.length
+  end
 end

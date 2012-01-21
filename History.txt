@@ -1,3 +1,7 @@
+== 0.3.0 / 2012-01-21
+
+* refactored and threw away all that array stuff that nobody wants
+
 == 0.2.1 / 2012-01-15
 
 * added parameter multiplier to set a general multiplier for the ranking

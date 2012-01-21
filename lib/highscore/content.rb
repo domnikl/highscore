@@ -34,36 +34,23 @@ module Highscore
     #   keywords -> Keywords
     #
     def keywords
-      keywords = Keywords.new(0)
+      keywords = Keywords.new
 
-      find_keywords.each do |k|
+      Keywords.find_keywords(@content).each do |text|
         weight = @emphasis[:multiplier]
 
-        if k.length >= @emphasis[:long_words_threshold]
+        if text.length >= @emphasis[:long_words_threshold]
           weight *= @emphasis[:long_words]
         end
 
-        if k[0] == k[0].upcase
+        if text[0] == text[0].upcase
           weight *= @emphasis[:upper_case]
         end
 
-        keywords[k] += weight
+        keywords << Highscore::Keyword.new(text, weight)
       end
 
       keywords
-    end
-
-    private
-
-    # find keywords in the content and rate them
-    #
-    def find_keywords
-      keywords = @content.scan(/\w+/)
-      keywords.delete_if do |x|
-        x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
-      end
-
-      keywords.sort
     end
   end
 end

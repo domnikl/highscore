@@ -1,7 +1,32 @@
+# external
+require 'digest/sha1'
+
 module Highscore
+
   # keywords that were found in content
   #
-  class Keywords < Hash
+  class Keywords
+    include Enumerable
+
+    # find keywords in a piece of content
+    def self.find_keywords content
+      keywords = content.scan(/\w+/)
+      keywords.delete_if do |x|
+        x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
+      end
+
+      keywords.delete_if do |key, value|
+        %w{the and that post add not see about using some something under our comments comment run you want for will file are with end new this use all but can your just get very data blog format out first they posts second}.include? key.downcase
+      end
+
+      keywords.sort
+    end
+
+    # init a new keyword collection
+    #
+    def initialize
+      @keywords = {}
+    end
 
     # ranks the keywords and removes keywords that have a low ranking
     # or are blacklisted
@@ -10,50 +35,44 @@ module Highscore
     #   rank -> array
     #
     def rank
-      filter
-      sort_it
+      sort
     end
 
     # get the top n keywords
     #
     def top n = 10
-      filter
       rank[0..(n - 1)]
     end
 
-    # sorts the keywords and returns a array of arrays
+    # add new keywords
     #
-    # :call-seq:
-    #   sort_it -> array
-    #
-    def sort_it
-      sort {|x,y| y[1] <=> x[1]}
-    end
+    def <<(keyword)
+      key = Digest::SHA1.hexdigest(keyword.text)
 
-    private
-
-    # filter out unwanted results
-    #
-    def filter
-      run_blacklist
-      filter_low
-    end
-
-    # filter low ranked keywords
-    #
-    def filter_low
-      delete_if do |key, value|
-        value <= 0
+      if @keywords.has_key?(key)
+        @keywords[key].weight += keyword.weight
+      else
+        @keywords[key] = keyword
       end
     end
 
-    # remove blacklisted keywords
+    # sort
+    def sort
+      sorted = @keywords.sort {|a,b| a[1] <=> b[1] }
+
+      # convert Array from sort back to Array of Keyword objects
+      sorted.collect {|x| x[1]}
+    end
+
+    # Enumerable
     #
-    def run_blacklist
-      # FIXME: add more keywords!
-      delete_if do |key, value|
-        %w{the and that post add not see about using some something under our comments comment run you want for will file are with end new this use all but can your just get very data blog format out first they posts second}.include? key.downcase
-      end
+    def each &block
+      @keywords.each {|keyword| keyword.call(keyword)}
+    end
+
+    # number of Keywords given
+    def length
+      @keywords.length
     end
   end
 end
