@@ -1,3 +1,7 @@
+== 0.3.2 / 2012-01-27
+
+* use custom lists of ignored words (blacklist), fallback to a default list
+
 == 0.3.1 / 2012-01-21
 
 * refactored and threw away all that array stuff that nobody wants
