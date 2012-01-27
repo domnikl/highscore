@@ -1,7 +1,7 @@
 highscore
 ===========
 
-Rank keywords in long texts.
+Find and rank keywords in long texts.
 
 Features
 --------
