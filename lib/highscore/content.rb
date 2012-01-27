@@ -5,8 +5,14 @@ module Highscore
   class Content
     attr_reader :content
 
-    def initialize content
+    def initialize(content, blacklist = nil)
       @content = content
+
+      unless blacklist
+        blacklist = Highscore::Blacklist.load_default_file
+      end
+
+      @blacklist = blacklist
 
       @emphasis = {
         :multiplier => 1.0,
@@ -36,7 +42,7 @@ module Highscore
     def keywords
       keywords = Keywords.new
 
-      Keywords.find_keywords(@content).each do |text|
+      Keywords.find_keywords(@content, @blacklist).each do |text|
         weight = @emphasis[:multiplier]
 
         if text.length >= @emphasis[:long_words_threshold]

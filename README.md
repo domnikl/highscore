@@ -29,6 +29,27 @@ Examples
     end
 
 
+Using a custom blacklist to ignore keywords
+-------------------------------------------
+
+    # setting single words
+    blacklist = Highscore::Blacklist.new
+    blacklist << 'foo'
+
+    # load a string/array
+    blacklist = Highscore::Blacklist.load "a string"
+    blacklist = Highscore::Blacklist.load %w{an array}
+
+    # loading from a file (separated by whitespace)
+    blacklist = Highscore::Blacklist.load_file "blacklist.txt"
+
+    # loading the default blacklist (falls back automatically if not explicit given)
+    blacklist = Highscore::Blacklist.load_default_file
+
+    # inject the blacklist into the content class
+    content = Highscore::Content.new "a string", blacklist
+
+
 Requirements
 ------------
 

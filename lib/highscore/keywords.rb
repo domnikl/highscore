@@ -9,14 +9,14 @@ module Highscore
     include Enumerable
 
     # find keywords in a piece of content
-    def self.find_keywords content
+    def self.find_keywords content, blacklist
       keywords = content.scan(/\w+/)
       keywords.delete_if do |x|
         x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
       end
 
       keywords.delete_if do |key, value|
-        %w{the and that post add not see about using some something under our comments comment run you want for will file are with end new this use all but can your just get very data blog format out first they posts second}.include? key.downcase
+        blacklist.include?(key.downcase)
       end
 
       keywords.sort
