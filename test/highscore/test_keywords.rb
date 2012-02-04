@@ -16,6 +16,20 @@ class TestKeywords < Test::Unit::TestCase
     assert Highscore::Keywords.new.length == 0
   end
 
+  def test_each
+    @keywords.each do |x|
+      assert(x.instance_of?(Highscore::Keyword), "should contain Highscore::Keyword instances, is #{x.class}")
+    end
+  end
+
+  def test_first
+    assert_equal 'the', @keywords.first.text
+  end
+
+  def test_last
+    assert_equal 'Highscore', @keywords.last.text
+  end
+
   def test_rank
     assert @keywords.length == 4
 

@@ -28,6 +28,13 @@ Examples
       keyword.weight # => rank weight (float)
     end
 
+    # you could simply just use a string
+    text = "foo bar".keywords(blacklist) do
+      set :multiplier, 10
+    end
+
+    text.keywords
+
 
 Using a custom blacklist to ignore keywords
 -------------------------------------------

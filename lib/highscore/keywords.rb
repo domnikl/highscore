@@ -67,12 +67,22 @@ module Highscore
     # Enumerable
     #
     def each &block
-      @keywords.each {|keyword| keyword.call(keyword)}
+      @keywords.each {|keyword| yield keyword[1] }
     end
 
     # number of Keywords given
     def length
       @keywords.length
+    end
+
+    # get the keyword with the highest rank
+    def first
+      sort.first
+    end
+
+    # get the keyword with the lowest rank
+    def last
+      sort.reverse.first
     end
   end
 end
