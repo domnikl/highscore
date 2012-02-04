@@ -61,4 +61,14 @@ class TestKeywords < Test::Unit::TestCase
   def test_top_empty
     assert_equal [], Highscore::Keywords.new.top(0)
   end
+
+  def test_merge!
+    other = Highscore::Keywords.new
+    other << Highscore::Keyword.new('Ruby', 100.3)
+
+    @keywords.merge!(other)
+
+    assert_equal 102.3, @keywords.first.weight
+    assert_equal 'Ruby', @keywords.first.text
+  end
 end

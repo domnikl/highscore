@@ -84,5 +84,14 @@ module Highscore
     def last
       sort.reverse.first
     end
+
+    # merge in another keyword list, operates on self
+    def merge!(other)
+      other.each do |keyword|
+        self << keyword
+      end
+
+      self
+    end
   end
 end
