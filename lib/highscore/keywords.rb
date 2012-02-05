@@ -10,7 +10,7 @@ module Highscore
 
     # find keywords in a piece of content
     def self.find_keywords content, blacklist
-      keywords = content.scan(/\w+/)
+      keywords = content.to_s.scan(/\w+/)
       keywords.delete_if do |x|
         x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
       end

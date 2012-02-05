@@ -44,6 +44,7 @@ module Highscore
 
       Keywords.find_keywords(@content, @blacklist).each do |text|
         weight = @emphasis[:multiplier]
+        text = text.to_s
 
         if text.length >= @emphasis[:long_words_threshold]
           weight *= @emphasis[:long_words]

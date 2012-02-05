@@ -22,4 +22,12 @@ class TestContent < Test::Unit::TestCase
     content = Highscore::Content.new content
     assert_equal 2, content.keywords.length
   end
+
+  # https://github.com/domnikl/highscore/issues/7
+  def test_keywords_fixnum
+    content = '522 abc 232'
+
+    content = Highscore::Content.new content
+    assert_equal 1, content.keywords.length
+  end
 end
