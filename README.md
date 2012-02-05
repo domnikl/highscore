@@ -14,61 +14,59 @@ Features
 Examples
 --------
 
-    text = Highscore::Content.new "foo bar"
-    text.configure.do 
-      set :multiplier, 2
-      set :upper_case, 3
-      set :long_words, 2
-      set :long_words_threshold, 15
-    end
+```ruby
+text = Highscore::Content.new "foo bar"
+text.configure.do
+  set :multiplier, 2
+  set :upper_case, 3
+  set :long_words, 2
+  set :long_words_threshold, 15
+end
 
-    # get all keywords
-    text.keywords.rank => Array
+# get all keywords
+text.keywords.rank => Array
 
-    # get the top 50 keywords
-    text.keywords.top(50).each do |keyword|
-      keyword.text   # => keyword text
-      keyword.weight # => rank weight (float)
-    end
+# get the top 50 keywords
+text.keywords.top(50).each do |keyword|
+  keyword.text   # => keyword text
+  keyword.weight # => rank weight (float)
+end
 
-    # you could simply just use a string
-    text = "foo bar".keywords(blacklist) do
-      set :multiplier, 10
-    end
+# you could simply just use a string
+text = "foo bar".keywords(blacklist) do
+  set :multiplier, 10
+end
 
-    text.keywords
+text.keywords
+```
 
 
 Using a custom blacklist to ignore keywords
 -------------------------------------------
 
-    # setting single words
-    blacklist = Highscore::Blacklist.new
-    blacklist << 'foo'
+```ruby
+# setting single words
+blacklist = Highscore::Blacklist.new
+blacklist << 'foo'
 
-    # load a string/array
-    blacklist = Highscore::Blacklist.load "a string"
-    blacklist = Highscore::Blacklist.load %w{an array}
+# load a string/array
+blacklist = Highscore::Blacklist.load "a string"
+blacklist = Highscore::Blacklist.load %w{an array}
 
-    # loading from a file (separated by whitespace)
-    blacklist = Highscore::Blacklist.load_file "blacklist.txt"
+# loading from a file (separated by whitespace)
+blacklist = Highscore::Blacklist.load_file "blacklist.txt"
 
-    # loading the default blacklist (falls back automatically if not explicit given)
-    blacklist = Highscore::Blacklist.load_default_file
+# loading the default blacklist (falls back automatically if not explicit given)
+blacklist = Highscore::Blacklist.load_default_file
 
-    # inject the blacklist into the content class
-    content = Highscore::Content.new "a string", blacklist
-
-
-Requirements
-------------
-
-(none)
+# inject the blacklist into the content class
+content = Highscore::Content.new "a string", blacklist
+```
 
 Install
 -------
 
-* sudo gem install highscore
+* `[sudo] gem install highscore`
 
 Author
 ------
