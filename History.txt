@@ -1,3 +1,8 @@
+== 0.4.0 / 2012-02-04
+
+* monkey-patched String to have a keywords method on it that takes the same arguments as Highscore::Content.new
+* merge multiple Keywords objects to one (e.g. from different sources)
+
 == 0.3.2 / 2012-01-27
 
 * use custom lists of ignored words (blacklist), fallback to a default list

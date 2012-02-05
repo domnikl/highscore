@@ -7,6 +7,9 @@ Features
 --------
 
 * configureable to rank different types of words different (uppercase, long words, etc.)
+* directly get keywords from String objects
+* blacklist words via a plain text file, String or an Array of words
+* merge together Keywords from multiple sources
 
 Examples
 --------
