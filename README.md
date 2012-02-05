@@ -16,7 +16,7 @@ Examples
 
 ```ruby
 text = Highscore::Content.new "foo bar"
-text.configure.do
+text.configure do
   set :multiplier, 2
   set :upper_case, 3
   set :long_words, 2
