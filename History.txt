@@ -1,3 +1,8 @@
+== 0.4.1 / 2012-02-06
+
+* fixed handling of keywords that are actually Fixnums
+* fixed a typo in the README (thanks to snyff)
+
 == 0.4.0 / 2012-02-04
 
 * monkey-patched String to have a keywords method on it that takes the same arguments as Highscore::Content.new
