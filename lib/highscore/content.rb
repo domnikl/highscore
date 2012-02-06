@@ -50,7 +50,7 @@ module Highscore
           weight *= @emphasis[:long_words]
         end
 
-        if text[0] == text[0].upcase
+        if text[0,1] == text[0,1].upcase
           weight *= @emphasis[:upper_case]
         end
 
