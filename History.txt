@@ -1,3 +1,8 @@
+== 0.4.2 / 2012-02-07
+
+* added a simple example that also shows return values in README.md
+* #7 fixed handling of keywords for Ruby 1.8.7 (thanks to undecided)
+
 == 0.4.1 / 2012-02-06
 
 * fixed handling of keywords that are actually Fixnums
