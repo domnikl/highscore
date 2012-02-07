@@ -6,7 +6,7 @@ Find and rank keywords in long texts.
 Features
 --------
 
-* configureable to rank different types of words different (uppercase, long words, etc.)
+* configurable to rank different types of words different (uppercase, long words, etc.)
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
 * merge together Keywords from multiple sources
@@ -26,20 +26,33 @@ end
 # get all keywords
 text.keywords.rank => Array
 
-# get the top 50 keywords
+# get only the top 50 keywords
 text.keywords.top(50).each do |keyword|
   keyword.text   # => keyword text
   keyword.weight # => rank weight (float)
 end
 
-# you could simply just use a string
-text = "foo bar".keywords(blacklist) do
+# you could just use a string
+keywords = "Foo bar baz".keywords(blacklist) do
   set :multiplier, 10
 end
-
-text.keywords
 ```
 
+The result is either a Highscore::Keywords object or an Array (depending on whether it's sorted or not) that you
+can iterate over. Each object in there is a Highscore::Keyword that has methods `text` and `weight`.
+
+```ruby
+keywords = "Foo bar is not bar baz".keywords(Highscore::Blacklist.load(['baz']))
+
+keywords.each do |k|
+  puts "#{k.text} #{k.weight}"
+end
+
+# prints:
+# Foo 3.0
+# bar 2.0
+# baz 1.0
+```
 
 Using a custom blacklist to ignore keywords
 -------------------------------------------
