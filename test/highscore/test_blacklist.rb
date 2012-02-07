@@ -65,7 +65,7 @@ class TestBlacklist < Test::Unit::TestCase
     keywords = "Foo bar is not bar baz".keywords(Highscore::Blacklist.load(['baz']))
 
     keyword_list = []
-    keywords.each do |k|
+    keywords.rank.each do |k|
       keyword_list << k.text
     end
 
