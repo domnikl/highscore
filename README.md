@@ -51,7 +51,7 @@ end
 # prints:
 # Foo 3.0
 # bar 2.0
-# baz 1.0
+# not 1.0
 ```
 
 Using a custom blacklist to ignore keywords

@@ -60,4 +60,17 @@ class TestBlacklist < Test::Unit::TestCase
     assert blacklist.include?("foobar")
     assert !blacklist.include?("bla")
   end
+
+  def test_blacklisting_content
+    keywords = "Foo bar is not bar baz".keywords(Highscore::Blacklist.load(['baz']))
+
+    keyword_list = []
+    keywords.each do |k|
+      keyword_list << k.text
+    end
+
+    expected_keywords = ['Foo', 'bar', 'not']
+
+    assert_equal expected_keywords, keyword_list
+  end
 end
