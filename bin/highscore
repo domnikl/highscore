@@ -1,7 +1,63 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+
 root = File.expand_path('../..', __FILE__)
 require File.join(root, %w[lib highscore])
 
-# Put your code here
+options = {
+    :emphasis => {},
+    :short => false
+}
 
+optparse = OptionParser.new do |opts|
+  opts.on('-h', '--help', 'display this help message') do
+    puts opts
+    exit
+  end
+
+  # blacklist file
+  opts.on('-b', '--blacklist FILEPATH', 'specify a blacklist file that should be used instead of the default') do |filepath|
+    options[:blacklist] = Highscore::Blacklist.load_file(filepath)
+  end
+
+  # general multiplier
+  opts.on('-m', '--multiplier MULTIPLIER', 'set the global rank multiplier') do |multiplier|
+    options[:emphasis][:multiplier] = multiplier.to_f
+  end
+
+  # don't print rank weight
+  opts.on('-s', '--short', 'don\'t print rank weight') do
+    options[:short] = true
+  end
+
+  # upper case
+  opts.on('-u', '--uppercase MULTIPLIER', 'rank multiplier for uppercase words (default is 3.0)') do |u|
+    options[:emphasis][:upper_case] = u.to_f
+  end
+
+  # long words
+  opts.on('-l', '--longwords MULTIPLIER', 'rank multiplier for long words (default is 2.0)') do |u|
+    options[:emphasis][:long_words] = u.to_f
+  end
+
+  # long words threshold
+  opts.on('-t', '--longwordsthreshold THRESHOLD', 'threshold for long words (default is 15 chars)') do |u|
+    options[:emphasis][:long_words_threshold] = u.to_i
+  end
+end
+
+optparse.parse!
+
+text = STDIN.read.to_s
+keywords = text.keywords(options[:blacklist]) do |content|
+  options[:emphasis].each do |key,value|
+    content.set key, value
+  end
+end
+
+keywords.rank.each do |keyword|
+  print keyword.text
+  print " #{keyword.weight}" unless options[:short]
+  puts
+end

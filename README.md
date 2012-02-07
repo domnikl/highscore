@@ -10,6 +10,7 @@ Features
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
 * merge together Keywords from multiple sources
+* contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
 Examples
 --------
@@ -53,6 +54,8 @@ end
 # bar 2.0
 # not 1.0
 ```
+
+Have a look at bin/highscore, you can run highscore on your CLI and feed it with text on STDIN.
 
 Using a custom blacklist to ignore keywords
 -------------------------------------------
