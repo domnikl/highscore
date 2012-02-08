@@ -30,4 +30,16 @@ class TestContent < Test::Unit::TestCase
     content = Highscore::Content.new content
     assert_equal 1, content.keywords.length
   end
+
+  def test_vowels_and_consonants
+    keywords = 'foobar RubyGems'.keywords do
+      set :vowels, 2
+      set :consonants, 3
+      set :upper_case, 1
+      set :long_words, 1
+    end
+
+    assert_equal 3.75, keywords.first.weight
+    assert_equal 3.5, keywords.last.weight
+  end
 end
