@@ -55,6 +55,10 @@ optparse = OptionParser.new do |opts|
   opts.on('-t', '--longwordsthreshold THRESHOLD', 'threshold for long words (default is 15 chars)') do |u|
     options[:emphasis][:long_words_threshold] = u.to_i
   end
+
+  opts.on('-n', '--top N', 'show only the top N keywords') do |u|
+    options[:top] = u.to_i
+  end
 end
 
 optparse.parse!
@@ -66,7 +70,13 @@ keywords = text.keywords(options[:blacklist]) do |content|
   end
 end
 
-keywords.rank.each do |keyword|
+if options[:top]
+  keywords = keywords.top(options[:top])
+else
+  keywords = keywords.rank
+end
+
+keywords.each do |keyword|
   print keyword.text
   print " #{keyword.weight}" unless options[:short]
   puts
