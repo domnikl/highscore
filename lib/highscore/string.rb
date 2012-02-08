@@ -15,4 +15,14 @@ class String
 
     content.keywords
   end
+
+  # get all vowels from a string
+  def vowels
+    gsub(/[^aeiou]/, '')
+  end
+
+  # get all consonants from a string
+  def consonants
+    gsub(/[aeiou]/, '')
+  end
 end
