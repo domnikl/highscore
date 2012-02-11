@@ -7,6 +7,7 @@ Features
 --------
 
 * configurable to rank different types of words different (uppercase, long words, etc.)
+* rate based on amount (%) of vowels and consonants in a string
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
 * merge together Keywords from multiple sources
@@ -22,10 +23,9 @@ text.configure do
   set :upper_case, 3
   set :long_words, 2
   set :long_words_threshold, 15
+  set :vowels, 1 # => default = 0 = not considered
+  set :consonants, 5 # => default = 0 = not considered
 end
-
-# get all keywords
-text.keywords.rank => Array
 
 # get only the top 50 keywords
 text.keywords.top(50).each do |keyword|
@@ -45,7 +45,7 @@ can iterate over. Each object in there is a Highscore::Keyword that has methods 
 ```ruby
 keywords = "Foo bar is not bar baz".keywords(Highscore::Blacklist.load(['baz']))
 
-keywords.each do |k|
+keywords.rank.each do |k|
   puts "#{k.text} #{k.weight}"
 end
 

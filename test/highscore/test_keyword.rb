@@ -22,6 +22,10 @@ class TestKeyword < Test::Unit::TestCase
     assert_equal 'Foobar', @keyword.text
   end
 
+  def test_to_s
+    assert_equal 'Ruby', @keyword.to_s
+  end
+
   def test_weight
     assert_equal 2, @keyword.weight
 

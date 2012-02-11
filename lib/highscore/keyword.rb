@@ -15,5 +15,10 @@ module Highscore
     def <=>(other)
       other.weight <=> @weight
     end
+
+    # get the string
+    def to_s
+      @text
+    end
   end
 end

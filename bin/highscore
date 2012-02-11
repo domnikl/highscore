@@ -36,6 +36,16 @@ optparse = OptionParser.new do |opts|
     options[:emphasis][:upper_case] = u.to_f
   end
 
+  # vowels
+  opts.on('--vowels MULTIPLIER', 'multiplier for vowels') do |u|
+    options[:emphasis][:vowels] = u.to_i
+  end
+
+  # vowels
+  opts.on('--consonants MULTIPLIER', 'multiplier for consonants') do |u|
+    options[:emphasis][:consonants] = u.to_i
+  end
+
   # long words
   opts.on('-l', '--longwords MULTIPLIER', 'rank multiplier for long words (default is 2.0)') do |u|
     options[:emphasis][:long_words] = u.to_f
@@ -44,6 +54,10 @@ optparse = OptionParser.new do |opts|
   # long words threshold
   opts.on('-t', '--longwordsthreshold THRESHOLD', 'threshold for long words (default is 15 chars)') do |u|
     options[:emphasis][:long_words_threshold] = u.to_i
+  end
+
+  opts.on('-n', '--top N', 'show only the top N keywords') do |u|
+    options[:top] = u.to_i
   end
 end
 
@@ -56,7 +70,13 @@ keywords = text.keywords(options[:blacklist]) do |content|
   end
 end
 
-keywords.rank.each do |keyword|
+if options[:top]
+  keywords = keywords.top(options[:top])
+else
+  keywords = keywords.rank
+end
+
+keywords.each do |keyword|
   print keyword.text
   print " #{keyword.weight}" unless options[:short]
   puts

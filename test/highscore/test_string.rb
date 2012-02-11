@@ -13,6 +13,14 @@ class TestString < Test::Unit::TestCase
     assert_equal 0, keywords.length
   end
 
+  def test_vowels
+    assert_equal("eoaiu", "feobariu".vowels)
+  end
+
+  def test_consonants
+    assert_equal("fbr", "feobariu".consonants)
+  end
+
   def test_default_blacklist
     keywords = "the Ruby Ruby Ruby Hacker".keywords
     assert_equal 2, keywords.length
