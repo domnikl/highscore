@@ -1,3 +1,8 @@
+== 0.4.3 / 2012-02-11
+
+* rate words based on the amount of vowels and consonants
+* added a CLI tool that uses all of the API (via parameters)
+
 == 0.4.2 / 2012-02-07
 
 * added a simple example that also shows return values in README.md
