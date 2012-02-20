@@ -5,6 +5,8 @@ module Highscore
   class Content
     attr_reader :content
 
+    # @param content String
+    # @param wordlist Highscore::Wordlist
     def initialize(content, wordlist = nil)
       @content = content
       @whitelist = @blacklist = nil
@@ -29,12 +31,15 @@ module Highscore
 
     # configure ranking
     #
+    # @param block
     def configure(&block)
       instance_eval(&block)
     end
 
     # set emphasis options to rank the content
     #
+    # @param key Symbol
+    # @param value Object
     def set(key, value)
       @emphasis[key.to_sym] = value.to_f
     end
@@ -68,6 +73,8 @@ module Highscore
 
     # weight a single text keyword
     #
+    # @param text String
+    # @return Float
     def weight(text)
       weight = @emphasis[:multiplier]
 
@@ -84,11 +91,19 @@ module Highscore
       weight
     end
 
+    # weight the vowels on a text
+    #
+    # @param text String
+    # @return Float
     def vowels(text)
       percent = text.vowels.length / text.length.to_f
       percent * @emphasis[:vowels]
     end
 
+    # weight the consonants on a text
+    #
+    # @param text String
+    # @return Float
     def consonants(text)
       percent = text.consonants.length / text.length.to_f
       percent * @emphasis[:consonants]
