@@ -6,8 +6,6 @@ module Highscore
   # blacklisted words to be ignored in the resulting keywords
   #
   class Blacklist < Wordlist
-    include Enumerable
-
     # load default file
     #
     def self.load_default_file

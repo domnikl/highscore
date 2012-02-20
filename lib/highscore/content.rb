@@ -5,14 +5,17 @@ module Highscore
   class Content
     attr_reader :content
 
-    def initialize(content, blacklist = nil)
+    def initialize(content, wordlist = nil)
       @content = content
+      @whitelist = @blacklist = nil
 
-      unless blacklist
-        blacklist = Highscore::Blacklist.load_default_file
+      if not wordlist
+        @blacklist = Highscore::Blacklist.load_default_file
+      elsif wordlist.kind_of? Highscore::Blacklist
+        @blacklist = wordlist
+      else
+        @whitelist = wordlist
       end
-
-      @blacklist = blacklist
 
       @emphasis = {
         :multiplier => 1.0,
@@ -38,18 +41,27 @@ module Highscore
 
     # get the ranked keywords
     #
-    # :call-seq:
-    #   keywords -> Keywords
-    #
+    # @return Highscore::Keywords
     def keywords
       keywords = Keywords.new
 
-      Keywords.find_keywords(@content, @blacklist).each do |text|
+      Keywords.find_keywords(@content, wordlist).each do |text|
         text = text.to_s
         keywords << Highscore::Keyword.new(text, weight(text))
       end
 
       keywords
+    end
+
+    # get the used wordlist
+    #
+    # @return Highscore::Wordlist
+    def wordlist
+      unless @whitelist.nil?
+        @whitelist
+      else
+        @blacklist
+      end
     end
 
     private
