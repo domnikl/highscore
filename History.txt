@@ -1,3 +1,10 @@
+== 0.5.0 / 2012-02-20
+
+* now supports a whitelist approach
+* <= 2 char words are ignored by default, but is now configurable
+* refactored a huge part of the API
+* added some more inline-documentation
+
 == 0.4.3 / 2012-02-11
 
 * rate words based on the amount of vowels and consonants
