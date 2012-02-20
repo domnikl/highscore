@@ -9,7 +9,7 @@ module Highscore
       @content = content
       @whitelist = @blacklist = nil
 
-      if not wordlist
+      if wordlist.nil?
         @blacklist = Highscore::Blacklist.load_default_file
       elsif wordlist.kind_of? Highscore::Blacklist
         @blacklist = wordlist
