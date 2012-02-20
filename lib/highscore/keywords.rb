@@ -9,14 +9,18 @@ module Highscore
     include Enumerable
 
     # find keywords in a piece of content
-    def self.find_keywords content, blacklist
+    def self.find_keywords content, wordlist
       keywords = content.to_s.scan(/\w+/)
       keywords.delete_if do |x|
         x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
       end
 
       keywords.delete_if do |key, value|
-        blacklist.include?(key.downcase)
+        if wordlist.kind_of? Highscore::Blacklist
+          wordlist.include?(key.downcase)
+        elsif wordlist.kind_of? Highscore::Whitelist
+          not wordlist.include?(key.downcase)
+        end
       end
 
       keywords.sort
