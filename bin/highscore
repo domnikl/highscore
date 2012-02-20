@@ -18,12 +18,22 @@ optparse = OptionParser.new do |opts|
 
   # blacklist file
   opts.on('-b', '--blacklist FILEPATH', 'specify a blacklist file that should be used instead of the default') do |filepath|
-    options[:blacklist] = Highscore::Blacklist.load_file(filepath)
+    options[:wordlist] = Highscore::Blacklist.load_file(filepath)
+  end
+
+  # whitelist file
+  opts.on('-w', '--whitelist FILEPATH', 'specify a whitelist file') do |filepath|
+    options[:wordlist] = Highscore::Whitelist.load_file(filepath)
   end
 
   # general multiplier
   opts.on('-m', '--multiplier MULTIPLIER', 'set the global rank multiplier') do |multiplier|
     options[:emphasis][:multiplier] = multiplier.to_f
+  end
+
+  # don't print rank weight
+  opts.on('--no-ignore-short', 'don\'t ignore short words (<= 2 chars)') do
+    options[:emphasis][:ignore_short_words] = false
   end
 
   # don't print rank weight
@@ -64,7 +74,7 @@ end
 optparse.parse!
 
 text = STDIN.read.to_s
-keywords = text.keywords(options[:blacklist]) do |content|
+keywords = text.keywords(options[:wordlist]) do |content|
   options[:emphasis].each do |key,value|
     content.set key, value
   end

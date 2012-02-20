@@ -10,6 +10,7 @@ Features
 * rate based on amount (%) of vowels and consonants in a string
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
+* optionally, configure a whitelist and only words from that list will get ranked
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
@@ -77,6 +78,15 @@ blacklist = Highscore::Blacklist.load_default_file
 
 # inject the blacklist into the content class
 content = Highscore::Content.new "a string", blacklist
+```
+
+Using a whitelist instead of ranking all words
+----------------------------------------------
+
+```ruby
+# construct and inject it just like a blacklist
+whitelist = Highscore::Whitelist.load %w{these are valid keywords}
+content = Highscore::Content.new "invalid words", whitelist
 ```
 
 Install
