@@ -42,4 +42,12 @@ class TestContent < Test::Unit::TestCase
     assert_equal 3.75, keywords.first.weight
     assert_equal 3.5, keywords.last.weight
   end
+
+  def test_rank_short_words
+    keywords = 'be as is foobar'.keywords do
+      set :ignore_short_words, false
+    end
+
+    assert_equal 4, keywords.length
+  end
 end

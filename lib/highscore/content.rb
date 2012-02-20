@@ -25,7 +25,8 @@ module Highscore
         :long_words => 2.0,
         :long_words_threshold => 15,
         :vowels => 0,
-        :consonants => 0
+        :consonants => 0,
+        :ignore_short_words => true
       }
     end
 
@@ -41,7 +42,7 @@ module Highscore
     # @param key Symbol
     # @param value Object
     def set(key, value)
-      @emphasis[key.to_sym] = value.to_f
+      @emphasis[key.to_sym] = value
     end
 
     # get the ranked keywords
@@ -52,7 +53,12 @@ module Highscore
 
       Keywords.find_keywords(@content, wordlist).each do |text|
         text = text.to_s
-        keywords << Highscore::Keyword.new(text, weight(text))
+
+        if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
+          keywords << Highscore::Keyword.new(text, weight(text))
+        elsif allow_short_words
+          keywords << Highscore::Keyword.new(text, weight(text))
+        end
       end
 
       keywords
@@ -70,6 +76,13 @@ module Highscore
     end
 
     private
+
+    # allow short words to be rated
+    #
+    # @return TrueClass FalseClass
+    def allow_short_words
+      not @emphasis[:ignore_short_words]
+    end
 
     # weight a single text keyword
     #

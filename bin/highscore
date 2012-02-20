@@ -32,6 +32,11 @@ optparse = OptionParser.new do |opts|
   end
 
   # don't print rank weight
+  opts.on('--no-ignore-short', 'don\'t ignore short words (<= 2 chars)') do
+    options[:emphasis][:ignore_short_words] = false
+  end
+
+  # don't print rank weight
   opts.on('-s', '--short', 'don\'t print rank weight') do
     options[:short] = true
   end

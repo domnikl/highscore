@@ -15,9 +15,6 @@ module Highscore
     # @return Highscore::Keywords
     def self.find_keywords content, wordlist
       keywords = content.to_s.scan(/\w+/)
-      keywords.delete_if do |x|
-        x.match(/^[\d]+(\.[\d]+){0,1}$/) or x.length <= 2
-      end
 
       keywords.delete_if do |key, value|
         if wordlist.kind_of? Highscore::Blacklist
