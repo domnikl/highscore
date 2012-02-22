@@ -26,6 +26,7 @@ text.configure do
   set :long_words_threshold, 15
   set :vowels, 1 # => default = 0 = not considered
   set :consonants, 5 # => default = 0 = not considered
+  set :stemming, true # => default: false, use word stemming
 end
 
 # get only the top 50 keywords

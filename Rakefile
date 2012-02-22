@@ -14,5 +14,5 @@ Bones {
   email    'liebler.dominik@googlemail.com'
   url      'http://thewebdev.de'
   ignore_file '.gitignore'
+  depend_on 'fast-stemmer'
 }
-

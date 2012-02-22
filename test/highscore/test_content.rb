@@ -66,4 +66,13 @@ class TestContent < Test::Unit::TestCase
 
     assert_equal 2, keywords.length
   end
+
+  def test_stemming
+    keywords = 'word words boards board woerter wort'.keywords do
+      set :stemming, true
+    end
+
+    assert_equal 4, keywords.length
+    assert_equal ['board', 'word', 'woerter', 'wort'], keywords.rank.map {|x| x.text }
+  end
 end

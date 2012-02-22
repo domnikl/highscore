@@ -1,6 +1,9 @@
 $:.unshift(File.join(File.dirname(__FILE__)))
 require 'keywords'
 
+# external gems
+require 'fast_stemmer'
+
 module Highscore
   class Content
     attr_reader :content
@@ -28,7 +31,8 @@ module Highscore
         :consonants => 0,
         :ignore_short_words => true,
         :ignore_case => false,
-        :word_pattern => /\w+/
+        :word_pattern => /\w+/,
+        :stemming => false
       }
     end
 
@@ -55,6 +59,7 @@ module Highscore
 
       Keywords.find_keywords(processed_content, wordlist, word_pattern).each do |text|
         text = text.to_s
+        text = text.stem if @emphasis[:stemming]
 
         if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
           keywords << Highscore::Keyword.new(text, weight(text))
