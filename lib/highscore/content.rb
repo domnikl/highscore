@@ -27,6 +27,7 @@ module Highscore
         :vowels => 0,
         :consonants => 0,
         :ignore_short_words => true,
+        :ignore_case => false,
         :word_pattern => /\w+/
       }
     end
@@ -52,7 +53,7 @@ module Highscore
     def keywords
       keywords = Keywords.new
 
-      Keywords.find_keywords(@content, wordlist, word_pattern).each do |text|
+      Keywords.find_keywords(processed_content, wordlist, word_pattern).each do |text|
         text = text.to_s
 
         if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
@@ -77,6 +78,16 @@ module Highscore
     end
 
     private
+
+    # processes the text content applying any necessary transformations
+    #
+    # @return String
+    def processed_content
+      "".tap do |result|
+        result.replace(@content) # initialize the result to be @content
+        result.replace(result.downcase) if @emphasis[:ignore_case]
+      end
+    end
 
     # allow short words to be rated
     #

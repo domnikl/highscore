@@ -58,4 +58,12 @@ class TestContent < Test::Unit::TestCase
     
     assert_equal 2, keywords.length
   end
+
+  def test_ignore_case
+    keywords = 'foo Foo bar Bar'.keywords do
+      set :ignore_case, true
+    end
+
+    assert_equal 2, keywords.length
+  end
 end
