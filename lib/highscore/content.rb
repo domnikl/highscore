@@ -2,6 +2,7 @@ $:.unshift(File.join(File.dirname(__FILE__)))
 require 'keywords'
 
 # external gems
+require 'rubygems'
 require 'fast_stemmer'
 
 module Highscore
