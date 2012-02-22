@@ -26,7 +26,8 @@ module Highscore
         :long_words_threshold => 15,
         :vowels => 0,
         :consonants => 0,
-        :ignore_short_words => true
+        :ignore_short_words => true,
+        :word_pattern => /\w+/
       }
     end
 
@@ -51,7 +52,7 @@ module Highscore
     def keywords
       keywords = Keywords.new
 
-      Keywords.find_keywords(@content, wordlist).each do |text|
+      Keywords.find_keywords(@content, wordlist, word_pattern).each do |text|
         text = text.to_s
 
         if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
@@ -82,6 +83,13 @@ module Highscore
     # @return TrueClass FalseClass
     def allow_short_words
       not @emphasis[:ignore_short_words]
+    end
+
+    # regex used to split text
+    #
+    # @return Regex
+    def word_pattern
+      @emphasis[:word_pattern]
     end
 
     # weight a single text keyword

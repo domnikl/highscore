@@ -50,4 +50,12 @@ class TestContent < Test::Unit::TestCase
 
     assert_equal 4, keywords.length
   end
+
+  def test_word_pattern
+    keywords = 'foo Ruby foo Ruby'.keywords do
+      set :word_pattern, /(?=(\b\w+\s\w+\b))/
+    end
+    
+    assert_equal 2, keywords.length
+  end
 end

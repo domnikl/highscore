@@ -12,9 +12,10 @@ module Highscore
     #
     # @param content String
     # @param wordlist Highscore::Wordlist
+    # @param pattern Regex
     # @return Highscore::Keywords
-    def self.find_keywords content, wordlist
-      keywords = content.to_s.scan(/\w+/)
+    def self.find_keywords content, wordlist, pattern=/\w+/
+      keywords = content.to_s.scan(pattern)
 
       keywords.delete_if do |key, value|
         if wordlist.kind_of? Highscore::Blacklist
