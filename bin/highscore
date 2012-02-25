@@ -39,7 +39,7 @@ optparse = OptionParser.new do |opts|
     options[:emphasis][:ignore_case] = true
   end
 
-  opts.on('--stemming', 'use word stemming') do
+  opts.on('--stemming', 'use word stemming (won\'t work on JRuby platforms)') do
     options[:emphasis][:stemming] = true
   end
 

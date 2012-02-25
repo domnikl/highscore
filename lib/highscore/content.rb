@@ -1,9 +1,8 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
+$:.unshift(File.dirname(__FILE__))
 require 'keywords'
 
 # external gems
 require 'rubygems'
-require 'fast_stemmer'
 
 module Highscore
   class Content
@@ -56,6 +55,8 @@ module Highscore
     #
     # @return Highscore::Keywords
     def keywords
+      @emphasis[:stemming] = use_stemming?
+
       keywords = Keywords.new
 
       Keywords.find_keywords(processed_content, wordlist, word_pattern).each do |text|
@@ -145,6 +146,23 @@ module Highscore
     def consonants(text)
       percent = text.consonants.length / text.length.to_f
       percent * @emphasis[:consonants]
+    end
+
+    private
+
+    # using stemming is only possible, if fast-stemmer is installed
+    # doesn't work for JRuby
+    def use_stemming?
+      if @emphasis[:stemming]
+        begin
+          require 'fast_stemmer'
+          true
+        rescue LoadError
+          false
+        end
+      else
+        false
+      end
     end
   end
 end

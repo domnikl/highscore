@@ -1,6 +1,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
 require "test/unit"
+require 'rubygems'
 
 class TestContent < Test::Unit::TestCase
   def setup
@@ -68,11 +69,20 @@ class TestContent < Test::Unit::TestCase
   end
 
   def test_stemming
-    keywords = 'word words boards board woerter wort'.keywords do
-      set :stemming, true
-    end
+    begin
+      require 'fast_stemmer'
 
-    assert_equal 4, keywords.length
-    assert_equal ['board', 'word', 'woerter', 'wort'], keywords.rank.map {|x| x.text }
+      keywords = 'word words boards board woerter wort'.keywords do
+        set :stemming, true
+      end
+
+      assert_equal 4, keywords.length
+
+      keywords.each do |k|
+        assert (%w{board word woerter wort}).include?(k.text)
+      end
+    rescue LoadError
+      # do nothing, just skip this test
+    end
   end
 end
