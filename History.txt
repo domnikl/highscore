@@ -1,4 +1,4 @@
-== 0.5.1 / 2012-02-25
+== 0.5.2 / 2012-02-25
 
 * added (optional) support for word stemming using the fast-stemmer gem
 * setting to enable/disable case-sensitivy (thanks to carlosramireziii)
