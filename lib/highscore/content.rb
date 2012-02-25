@@ -1,5 +1,8 @@
-$:.unshift(File.join(File.dirname(__FILE__)))
+$:.unshift(File.dirname(__FILE__))
 require 'keywords'
+
+# external gems
+require 'rubygems'
 
 module Highscore
   class Content
@@ -26,7 +29,10 @@ module Highscore
         :long_words_threshold => 15,
         :vowels => 0,
         :consonants => 0,
-        :ignore_short_words => true
+        :ignore_short_words => true,
+        :ignore_case => false,
+        :word_pattern => /\w+/,
+        :stemming => false
       }
     end
 
@@ -49,10 +55,13 @@ module Highscore
     #
     # @return Highscore::Keywords
     def keywords
+      @emphasis[:stemming] = use_stemming?
+
       keywords = Keywords.new
 
-      Keywords.find_keywords(@content, wordlist).each do |text|
+      Keywords.find_keywords(processed_content, wordlist, word_pattern).each do |text|
         text = text.to_s
+        text = text.stem if @emphasis[:stemming]
 
         if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
           keywords << Highscore::Keyword.new(text, weight(text))
@@ -77,11 +86,28 @@ module Highscore
 
     private
 
+    # processes the text content applying any necessary transformations
+    #
+    # @return String
+    def processed_content
+      "".tap do |result|
+        result.replace(@content) # initialize the result to be @content
+        result.replace(result.downcase) if @emphasis[:ignore_case]
+      end
+    end
+
     # allow short words to be rated
     #
     # @return TrueClass FalseClass
     def allow_short_words
       not @emphasis[:ignore_short_words]
+    end
+
+    # regex used to split text
+    #
+    # @return Regex
+    def word_pattern
+      @emphasis[:word_pattern]
     end
 
     # weight a single text keyword
@@ -120,6 +146,23 @@ module Highscore
     def consonants(text)
       percent = text.consonants.length / text.length.to_f
       percent * @emphasis[:consonants]
+    end
+
+    private
+
+    # using stemming is only possible, if fast-stemmer is installed
+    # doesn't work for JRuby
+    def use_stemming?
+      if @emphasis[:stemming]
+        begin
+          require 'fast_stemmer'
+          true
+        rescue LoadError
+          false
+        end
+      else
+        false
+      end
     end
   end
 end

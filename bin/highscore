@@ -31,14 +31,16 @@ optparse = OptionParser.new do |opts|
     options[:emphasis][:multiplier] = multiplier.to_f
   end
 
-  # don't print rank weight
   opts.on('--no-ignore-short', 'don\'t ignore short words (<= 2 chars)') do
     options[:emphasis][:ignore_short_words] = false
   end
 
-  # don't print rank weight
-  opts.on('-s', '--short', 'don\'t print rank weight') do
-    options[:short] = true
+  opts.on('--ignore-case', 'case insensitive') do
+    options[:emphasis][:ignore_case] = true
+  end
+
+  opts.on('--stemming', 'use word stemming (won\'t work on JRuby platforms)') do
+    options[:emphasis][:stemming] = true
   end
 
   # upper case
@@ -68,6 +70,11 @@ optparse = OptionParser.new do |opts|
 
   opts.on('-n', '--top N', 'show only the top N keywords') do |u|
     options[:top] = u.to_i
+  end
+
+  # don't print rank weight
+  opts.on('-s', '--short', 'don\'t print rank weight') do
+    options[:short] = true
   end
 end
 

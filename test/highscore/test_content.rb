@@ -1,6 +1,7 @@
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
 require "test/unit"
+require 'rubygems'
 
 class TestContent < Test::Unit::TestCase
   def setup
@@ -49,5 +50,39 @@ class TestContent < Test::Unit::TestCase
     end
 
     assert_equal 4, keywords.length
+  end
+
+  def test_word_pattern
+    keywords = 'foo Ruby foo Ruby'.keywords do
+      set :word_pattern, /(?=(\b\w+\s\w+\b))/
+    end
+    
+    assert_equal 2, keywords.length
+  end
+
+  def test_ignore_case
+    keywords = 'foo Foo bar Bar'.keywords do
+      set :ignore_case, true
+    end
+
+    assert_equal 2, keywords.length
+  end
+
+  def test_stemming
+    begin
+      require 'fast_stemmer'
+
+      keywords = 'word words boards board woerter wort'.keywords do
+        set :stemming, true
+      end
+
+      assert_equal 4, keywords.length
+
+      keywords.each do |k|
+        assert (%w{board word woerter wort}).include?(k.text)
+      end
+    rescue LoadError
+      # do nothing, just skip this test
+    end
   end
 end

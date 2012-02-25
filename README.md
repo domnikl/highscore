@@ -1,6 +1,8 @@
 highscore
 ===========
 
+[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore)
+
 Find and rank keywords in long texts.
 
 Features
@@ -11,6 +13,7 @@ Features
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
 * optionally, configure a whitelist and only words from that list will get ranked
+* use word stemming (requires the fast-stemmer gem, doesn't work on JRuby platforms!)
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
@@ -24,8 +27,11 @@ text.configure do
   set :upper_case, 3
   set :long_words, 2
   set :long_words_threshold, 15
-  set :vowels, 1 # => default = 0 = not considered
-  set :consonants, 5 # => default = 0 = not considered
+  set :vowels, 1                     # => default: 0 = not considered
+  set :consonants, 5                 # => default: 0 = not considered
+  set :ignore_case, true             # => default: false
+  set :word_pattern, /[\w]+[^\s0-9]/ # => default: /\w+/
+  set :stemming, true                # => default: false
 end
 
 # get only the top 50 keywords
@@ -93,6 +99,10 @@ Install
 -------
 
 * `[sudo] gem install highscore`
+
+To use word stemming, you need to have the fast-stemmer gem installed:
+
+* `[sudo] gem install fast-stemmer`
 
 Author
 ------

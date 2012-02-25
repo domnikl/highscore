@@ -1,3 +1,4 @@
+require 'rubygems'
 
 begin
   require 'bones'
@@ -15,4 +16,3 @@ Bones {
   url      'http://thewebdev.de'
   ignore_file '.gitignore'
 }
-
