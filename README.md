@@ -1,9 +1,9 @@
 highscore
 ===========
 
-[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore)
+Easily find and rank keywords in long texts.
 
-Find and rank keywords in long texts.
+[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore)
 
 Features
 --------
