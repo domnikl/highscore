@@ -60,6 +60,14 @@ class TestContent < Test::Unit::TestCase
     assert_equal 2, keywords.length
   end
 
+  def test_concat_word_pattern_groups
+    keywords = 'foo Ruby foo Ruby'.keywords do
+      set :word_pattern, /(?=(\b\w+\s\w+\b))/
+    end
+    
+    assert_includes keywords.collect(&:text), 'foo Ruby'
+  end
+
   def test_ignore_case
     keywords = 'foo Foo bar Bar'.keywords do
       set :ignore_case, true
