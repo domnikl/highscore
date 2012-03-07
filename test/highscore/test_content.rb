@@ -65,7 +65,7 @@ class TestContent < Test::Unit::TestCase
       set :word_pattern, /(?=(\b\w+\s\w+\b))/
     end
     
-    assert_includes keywords.collect(&:text), 'foo Ruby'
+    assert keywords.collect(&:text).include? 'foo Ruby'
   end
 
   def test_ignore_case
