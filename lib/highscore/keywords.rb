@@ -15,7 +15,7 @@ module Highscore
     # @param pattern Regex
     # @return Highscore::Keywords
     def self.find_keywords content, wordlist, pattern=/\w+/
-      keywords = content.to_s.scan(pattern)
+      keywords = content.to_s.scan(pattern).flatten
       keywords.delete_if do |key, value|
         if wordlist.kind_of? Highscore::Blacklist
           wordlist.include?(key.downcase)
