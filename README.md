@@ -13,7 +13,7 @@ Features
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words
 * optionally, configure a whitelist and only words from that list will get ranked
-* use word stemming (requires the fast-stemmer gem, doesn't work on JRuby platforms!)
+* use word stemming (requires the `fast-stemmer` gem, or the `stemmer` gem)
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
@@ -100,9 +100,10 @@ Install
 
 * `[sudo] gem install highscore`
 
-To use word stemming, you need to have the fast-stemmer gem installed:
+To use word stemming, you need to have the `fast-stemmer` (C extension) or `stemmer` gem installed:
 
 * `[sudo] gem install fast-stemmer`
+* `[sudo] gem install stemmer`
 
 Author
 ------
