@@ -158,7 +158,12 @@ module Highscore
           require 'fast_stemmer'
           true
         rescue LoadError
-          false
+          begin
+            require 'stemmer'
+            true
+          rescue LoadError
+            false
+          end
         end
       else
         false

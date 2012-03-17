@@ -77,9 +77,22 @@ class TestContent < Test::Unit::TestCase
   end
 
   def test_stemming
+    loaded_stemmer = false
+
     begin
       require 'fast_stemmer'
+      loaded_stemmer = true
+    rescue LoadError
+      begin
+        require 'stemmer'
+        loaded_stemmer = true
+      rescue LoadError
+        # skip this test, neither fast_stemmer nor stemmer is installed!
+        fail
+      end
+    end
 
+    if loaded_stemmer
       keywords = 'word words boards board woerter wort'.keywords do
         set :stemming, true
       end
@@ -87,10 +100,8 @@ class TestContent < Test::Unit::TestCase
       assert_equal 4, keywords.length
 
       keywords.each do |k|
-        assert (%w{board word woerter wort}).include?(k.text)
+        assert %w{board word woerter wort}.include?(k.text)
       end
-    rescue LoadError
-      # do nothing, just skip this test
     end
   end
 end
