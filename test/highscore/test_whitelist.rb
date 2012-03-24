@@ -1,8 +1,6 @@
-$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
-require "whitelist"
-require "test/unit"
+require File.dirname(__FILE__) + '/../test_highscore'
 
-class TestBlacklist < Test::Unit::TestCase
+class TestBlacklist < Highscore::TestCase
   def test_is_wordlist
     whitelist = Highscore::Whitelist.new
     assert whitelist.kind_of? Highscore::Wordlist

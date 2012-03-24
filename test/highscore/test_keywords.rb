@@ -1,9 +1,6 @@
-$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
-require 'keywords'
-require 'keyword'
-require "test/unit"
+require File.dirname(__FILE__) + '/../test_highscore'
 
-class TestKeywords < Test::Unit::TestCase
+class TestKeywords < Highscore::TestCase
   def setup
     @keywords = Highscore::Keywords.new
     @keywords << Highscore::Keyword.new('Ruby', 2)

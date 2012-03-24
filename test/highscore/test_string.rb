@@ -1,8 +1,6 @@
-$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib}))
-require 'highscore'
-require "test/unit"
+require File.dirname(__FILE__) + '/../test_highscore'
 
-class TestString < Test::Unit::TestCase
+class TestString < Highscore::TestCase
   def setup
     blacklist_file = File.join(File.dirname(__FILE__), %w{.. fixtures blacklist.txt})
     @blacklist = Highscore::Blacklist.load_file(blacklist_file)

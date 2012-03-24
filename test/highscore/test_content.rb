@@ -1,9 +1,6 @@
-$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
-require "content"
-require "test/unit"
-require 'rubygems'
+require File.dirname(__FILE__) + '/../test_highscore'
 
-class TestContent < Test::Unit::TestCase
+class TestContent < Highscore::TestCase
   def setup
     @text = "This is some text"
     @content = Highscore::Content.new(@text)
