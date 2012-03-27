@@ -1,4 +1,8 @@
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. lib highscore}))
+
+require 'simplecov'
+SimpleCov.start
+
 require 'highscore'
 require 'test/unit'
 
