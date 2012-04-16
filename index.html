@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Highscore : find and rank keywords in text" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Highscore</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/domnikl/highscore">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Highscore</h1>
+          <h2 id="project_tagline">find and rank keywords in text</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/domnikl/highscore/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/domnikl/highscore/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>Features</h2>
+
+<ul>
+<li>configurable to rank different types of words different (uppercase, long words, etc.)</li>
+<li>rate based on amount (%) of vowels and consonants in a string</li>
+<li>directly get keywords from String objects</li>
+<li>blacklist words via a plain text file, String or an Array of words</li>
+<li>optionally, configure a whitelist and only words from that list will get ranked</li>
+<li>use word stemming (requires the fast-stemmer gem, doesn't work on JRuby platforms!)</li>
+<li>merge together Keywords from multiple sources</li>
+<li>contains a CLI tool that operates on STDIN/OUT and is configurable via parameters</li>
+</ul><h2>Examples</h2>
+
+<div class="highlight">
+<pre><span class="n">text</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Content</span><span class="o">.</span><span class="n">new</span> <span class="s2">"foo bar"</span>
+<span class="n">text</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span>
+  <span class="n">set</span> <span class="ss">:multiplier</span><span class="p">,</span> <span class="mi">2</span>
+  <span class="n">set</span> <span class="ss">:upper_case</span><span class="p">,</span> <span class="mi">3</span>
+  <span class="n">set</span> <span class="ss">:long_words</span><span class="p">,</span> <span class="mi">2</span>
+  <span class="n">set</span> <span class="ss">:long_words_threshold</span><span class="p">,</span> <span class="mi">15</span>
+  <span class="n">set</span> <span class="ss">:vowels</span><span class="p">,</span> <span class="mi">1</span>                     <span class="c1"># =&gt; default: 0 = not considered</span>
+  <span class="n">set</span> <span class="ss">:consonants</span><span class="p">,</span> <span class="mi">5</span>                 <span class="c1"># =&gt; default: 0 = not considered</span>
+  <span class="n">set</span> <span class="ss">:ignore_case</span><span class="p">,</span> <span class="kp">true</span>             <span class="c1"># =&gt; default: false</span>
+  <span class="n">set</span> <span class="ss">:word_pattern</span><span class="p">,</span> <span class="sr">/[\w]+[^\s0-9]/</span> <span class="c1"># =&gt; default: /\w+/</span>
+  <span class="n">set</span> <span class="ss">:stemming</span><span class="p">,</span> <span class="kp">true</span>                <span class="c1"># =&gt; default: false</span>
+<span class="k">end</span>
+
+<span class="c1"># get only the top 50 keywords</span>
+<span class="n">text</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">keyword</span><span class="o">|</span>
+  <span class="n">keyword</span><span class="o">.</span><span class="n">text</span>   <span class="c1"># =&gt; keyword text</span>
+  <span class="n">keyword</span><span class="o">.</span><span class="n">weight</span> <span class="c1"># =&gt; rank weight (float)</span>
+<span class="k">end</span>
+
+<span class="c1"># you could just use a string</span>
+<span class="n">keywords</span> <span class="o">=</span> <span class="s2">"Foo bar baz"</span><span class="o">.</span><span class="n">keywords</span><span class="p">(</span><span class="n">blacklist</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">set</span> <span class="ss">:multiplier</span><span class="p">,</span> <span class="mi">10</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<p>The result is either a Highscore::Keywords object or an Array (depending on whether it's sorted or not) that you
+can iterate over. Each object in there is a Highscore::Keyword that has methods <code>text</code> and <code>weight</code>.</p>
+
+<div class="highlight">
+<pre><span class="n">keywords</span> <span class="o">=</span> <span class="s2">"Foo bar is not bar baz"</span><span class="o">.</span><span class="n">keywords</span><span class="p">(</span><span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="o">[</span><span class="s1">'baz'</span><span class="o">]</span><span class="p">))</span>
+
+<span class="n">keywords</span><span class="o">.</span><span class="n">rank</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="o">|</span>
+  <span class="nb">puts</span> <span class="s2">"</span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">k</span><span class="o">.</span><span class="n">weight</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+
+<span class="c1"># prints:</span>
+<span class="c1"># Foo 3.0</span>
+<span class="c1"># bar 2.0</span>
+<span class="c1"># not 1.0</span>
+</pre>
+</div>
+
+
+<p>Have a look at bin/highscore, you can run highscore on your CLI and feed it with text on STDIN.</p>
+
+<h2>Using a custom blacklist to ignore keywords</h2>
+
+<div class="highlight">
+<pre><span class="c1"># setting single words</span>
+<span class="n">blacklist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">new</span>
+<span class="n">blacklist</span> <span class="o">&lt;&lt;</span> <span class="s1">'foo'</span>
+
+<span class="c1"># load a string/array</span>
+<span class="n">blacklist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">load</span> <span class="s2">"a string"</span>
+<span class="n">blacklist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">load</span> <span class="sx">%w{an array}</span>
+
+<span class="c1"># loading from a file (separated by whitespace)</span>
+<span class="n">blacklist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">load_file</span> <span class="s2">"blacklist.txt"</span>
+
+<span class="c1"># loading the default blacklist (falls back automatically if not explicit given)</span>
+<span class="n">blacklist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Blacklist</span><span class="o">.</span><span class="n">load_default_file</span>
+
+<span class="c1"># inject the blacklist into the content class</span>
+<span class="n">content</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Content</span><span class="o">.</span><span class="n">new</span> <span class="s2">"a string"</span><span class="p">,</span> <span class="n">blacklist</span>
+</pre>
+</div>
+
+
+<h2>Using a whitelist instead of ranking all words</h2>
+
+<div class="highlight">
+<pre><span class="c1"># construct and inject it just like a blacklist</span>
+<span class="n">whitelist</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Whitelist</span><span class="o">.</span><span class="n">load</span> <span class="sx">%w{these are valid keywords}</span>
+<span class="n">content</span> <span class="o">=</span> <span class="no">Highscore</span><span class="o">::</span><span class="no">Content</span><span class="o">.</span><span class="n">new</span> <span class="s2">"invalid words"</span><span class="p">,</span> <span class="n">whitelist</span>
+</pre>
+</div>
+
+
+<h2>Install</h2>
+
+<ul>
+<li><code>[sudo] gem install highscore</code></li>
+</ul><p>To use word stemming, you need to have the fast-stemmer gem installed:</p>
+
+<ul>
+<li><code>[sudo] gem install fast-stemmer</code></li>
+</ul><h2>Author</h2>
+
+<p>Original author: Dominik Liebler <a href="mailto:liebler.dominik@googlemail.com">liebler.dominik@googlemail.com</a></p>
+
+<h2>License</h2>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2012 Dominik Liebler</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Highscore maintained by <a href="https://github.com/domnikl">domnikl</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-9816149-12");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
