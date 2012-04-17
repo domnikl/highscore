@@ -13,7 +13,7 @@ Bones {
   name     'highscore'
   authors  'Dominik Liebler'
   email    'liebler.dominik@googlemail.com'
-  url      'http://thewebdev.de'
+  url      'http://domnikl.github.com/highscore'
   ignore_file '.gitignore'
   depend_on 'simplecov', :development => true
 }
