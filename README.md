@@ -1,12 +1,10 @@
-highscore
-===========
+# highscore
 
 Easily find and rank keywords in long texts.
 
 [![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore)
 
-Features
---------
+## Features
 
 * configurable to rank different types of words different (uppercase, long words, etc.)
 * rate based on amount (%) of vowels and consonants in a string
@@ -17,8 +15,7 @@ Features
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
-Examples
---------
+## Examples
 
 ```ruby
 text = Highscore::Content.new "foo bar"
@@ -64,8 +61,7 @@ end
 
 Have a look at bin/highscore, you can run highscore on your CLI and feed it with text on STDIN.
 
-Using a custom blacklist to ignore keywords
--------------------------------------------
+## Using a custom blacklist to ignore keywords
 
 ```ruby
 # setting single words
@@ -86,8 +82,7 @@ blacklist = Highscore::Blacklist.load_default_file
 content = Highscore::Content.new "a string", blacklist
 ```
 
-Using a whitelist instead of ranking all words
-----------------------------------------------
+## Using a whitelist instead of ranking all words
 
 ```ruby
 # construct and inject it just like a blacklist
@@ -95,8 +90,7 @@ whitelist = Highscore::Whitelist.load %w{these are valid keywords}
 content = Highscore::Content.new "invalid words", whitelist
 ```
 
-Install
--------
+## Install
 
 * `[sudo] gem install highscore`
 
@@ -105,13 +99,11 @@ To use word stemming, you need to have the `fast-stemmer` (C extension) or `stem
 * `[sudo] gem install fast-stemmer`
 * `[sudo] gem install stemmer`
 
-Author
-------
+## Author
 
 Original author: Dominik Liebler <liebler.dominik@googlemail.com>
 
-License
--------
+## License
 
 (The MIT License)
 
