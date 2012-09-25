@@ -10,3 +10,6 @@ rvm:
 
 # fast-stemmer is a C extension, so it won't work with JRuby ...
 before_install: gem install bones; (gem install fast-stemmer &); sleep 10
+notifications:
+  recipients:
+    - liebler.dominik@googlemail.com
