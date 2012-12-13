@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.email = "liebler.dominik@googlemail.com"
   s.executables = ["highscore"]
   s.extra_rdoc_files = ["History.txt", "lib/blacklist.txt"]
-  s.files = [".gitignore", ".travis.yml", "lib/blacklist.txt", "lib/highscore.rb", "lib/highscore/blacklist.rb", "lib/highscore/content.rb", "lib/highscore/keyword.rb", "lib/highscore/keywords.rb", "lib/highscore/string.rb", "lib/highscore/whitelist.rb", "lib/highscore/wordlist.rb", "test/fixtures/blacklist.txt", "test/highscore/test_blacklist.rb", "test/highscore/test_content.rb", "test/highscore/test_keyword.rb", "test/highscore/test_keywords.rb", "test/highscore/test_string.rb", "test/highscore/test_whitelist.rb", "test/highscore/test_wordlist.rb", "test/test_highscore.rb", "version.txt"]
   s.files = Dir.glob("{bin,lib,test}/**/*") + %w(README.md History.txt Rakefile version.txt)
   s.homepage = "https://domnikl.github.com/highscore"
   s.rdoc_options = ["--main", "README.md"]
