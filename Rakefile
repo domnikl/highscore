@@ -1,19 +1,23 @@
 require 'rubygems'
 
-begin
-  require 'bones'
-rescue LoadError
-  abort '### Please install the "bones" gem ###'
-end
-
 task :default => 'test:run'
 task 'gem:release' => 'test:run'
 
-Bones {
-  name     'highscore'
-  authors  'Dominik Liebler'
-  email    'liebler.dominik@googlemail.com'
-  url      'http://domnikl.github.com/highscore'
-  ignore_file '.gitignore'
-  depend_on 'simplecov', :development => true
-}
+$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+require "highscore"
+
+gem_name = "highscore-#{Highscore::VERSION}.gem"
+
+namespace :gem do
+    task :build do
+      system "gem build highscore.gemspec"
+    end
+
+    task :install => :build do
+      system "gem install #{gem_name}"
+    end
+
+    task :release => :build do
+      system "gem push #{gem_name}"
+    end
+end
