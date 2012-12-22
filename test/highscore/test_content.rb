@@ -101,4 +101,12 @@ class TestContent < Highscore::TestCase
       end
     end
   end
+  
+  def test_language_english
+    assert_equal :english, Highscore::Content.new("this is obviously an english text").language
+  end
+  
+  def test_language_german
+    assert_equal :german, Highscore::Content.new("Das ist sicherlich ein deutscher Text!").language
+  end
 end

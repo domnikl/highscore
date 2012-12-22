@@ -84,6 +84,14 @@ module Highscore
       end
     end
 
+    # guess the language of the content and return a symbol for it
+    # => done via whatlanguage gem
+    #
+    # @return Symbol
+    def language
+      @content.language
+    end
+
     private
 
     # processes the text content applying any necessary transformations
@@ -147,8 +155,6 @@ module Highscore
       percent = text.consonants.length / text.length.to_f
       percent * @emphasis[:consonants]
     end
-
-    private
 
     # using stemming is only possible, if fast-stemmer is installed
     # doesn't work for JRuby
