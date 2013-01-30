@@ -58,6 +58,7 @@ module Highscore
     # @param language_wordlist Highscore::Wordlist
     # @param language String
     def add_wordlist(language_wordlist, language)
+      raise ArgumentError, "Not a valid Wordlist" unless language_wordlist.kind_of? Highscore::Wordlist
       language_wordlists[language.to_sym] = language_wordlist
     end
 
