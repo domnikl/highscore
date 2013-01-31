@@ -1,3 +1,4 @@
+# encoding: utf-8
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
 require "test/unit"
@@ -30,6 +31,13 @@ class TestContent < Test::Unit::TestCase
 
     content = Highscore::Content.new content
     assert_equal 1, content.keywords.length
+  end
+
+  def test_keywords_utf8
+    content = 'Schöne Grüße, caractères, русский'
+
+    content = Highscore::Content.new content
+    assert_equal 4, content.keywords.length
   end
 
   def test_vowels_and_consonants

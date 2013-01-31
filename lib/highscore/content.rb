@@ -31,7 +31,7 @@ module Highscore
         :consonants => 0,
         :ignore_short_words => true,
         :ignore_case => false,
-        :word_pattern => /\w+/,
+        :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
     end
