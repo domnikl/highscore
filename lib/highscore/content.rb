@@ -33,9 +33,13 @@ module Highscore
         :consonants => 0,
         :ignore_short_words => true,
         :ignore_case => false,
-        :word_pattern => /\w+/,
+        :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
+      
+      if RUBY_VERSION =~ /^1\.8/
+        @emphasis[:word_pattern] = /\w+/
+      end
     end
 
     # configure ranking

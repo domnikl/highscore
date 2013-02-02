@@ -1,6 +1,7 @@
 == 0.6.0 / 2013-02-02
 
 * added per-language support for black- and whitelists (thanks to bobjflong)
+* fixed tokenization for UTF-8 strings (this is broken in Ruby 1.8.x!) (thanks to pdg)
 
 == 0.5.2 / 2012-02-25
 

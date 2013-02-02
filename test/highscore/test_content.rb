@@ -1,4 +1,8 @@
-require File.dirname(__FILE__) + '/../test_highscore'
+# encoding: utf-8
+$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
+require "content"
+require "test/unit"
+require 'rubygems'
 
 class TestContent < Highscore::TestCase
   def setup
@@ -27,6 +31,19 @@ class TestContent < Highscore::TestCase
 
     content = Highscore::Content.new content
     assert_equal 1, content.keywords.length
+  end
+
+  def test_keywords_utf8
+    content = 'Schöne Grüße, caractères, русский'
+
+    content = Highscore::Content.new content
+    
+    if RUBY_VERSION =~ /^1\.8/
+      # Ruby 1.8 doesn't support correct tokenization
+      assert_equal 3, content.keywords.length
+    else
+      assert_equal 4, content.keywords.length
+    end
   end
 
   def test_vowels_and_consonants
@@ -110,3 +127,4 @@ class TestContent < Highscore::TestCase
     assert_equal :german, Highscore::Content.new("Das ist sicherlich ein deutscher Text!").language
   end
 end
+
