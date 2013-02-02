@@ -17,12 +17,16 @@ class TestMultipleBlacklists < Test::Unit::TestCase
     @content.configure do
       set :ignore_case, true
     end
-    @content.add_wordlist @blacklist_francais, "fr"
-    @content.add_wordlist @whitelist_simple, "si"
+    @content.add_wordlist @blacklist_francais, 'fr'
+    @content.add_wordlist @whitelist_simple, 'si'
+  end
+  
+  def sort_for_ruby18(keywords)
+    keywords.join(' ').split(' ').sort
   end
   
   def test_different_language
-    assert (@content.keywords(lang: :fr).top(3).join " ") == 'monsieur programmer suis'
+    assert_equal %w(monsieur programmer suis you), sort_for_ruby18(@content.keywords(:lang => :fr).top(4))
   end
   
   def test_bad_wordlist
@@ -32,11 +36,11 @@ class TestMultipleBlacklists < Test::Unit::TestCase
   end
   
   def test_normal_operation
-    assert (@content.keywords.top(3).join " ") == "monsieur oui suis"
+    assert_equal %w(monsieur oui suis), sort_for_ruby18(@content.keywords.top(3))
   end
   
   def test_added_whitelist
-    assert (@content.keywords(lang: :si).top(3).join " ") == "programmer"
+    assert_equal %w(programmer), sort_for_ruby18(@content.keywords(:lang => :si).top(3))
   end
 end
   

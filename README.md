@@ -103,7 +103,7 @@ text.keywords.top(3).join " "
 # Load a rudimentary blacklist for French
 blacklist_francais = Highscore::Blacklist.load "oui"
 text.add_wordlist blacklist_francais, "fr"
-text.keywords(lang: :fr).top(3).join " "
+text.keywords(:lang => :fr).top(3).join " "
 
 # Prints "interesting mister"
 ```
