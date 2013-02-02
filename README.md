@@ -90,6 +90,24 @@ whitelist = Highscore::Whitelist.load %w{these are valid keywords}
 content = Highscore::Content.new "invalid words", whitelist
 ```
 
+## Multiple languages
+
+```ruby
+# Load a default blacklist
+blacklist_default = Highscore::Blacklist.load "mister"
+text = Highscore::Content.new "oui mister interesting", blacklist_default
+text.keywords.top(3).join " "
+
+# Prints "interesting oui"
+
+# Load a rudimentary blacklist for French
+blacklist_francais = Highscore::Blacklist.load "oui"
+text.add_wordlist blacklist_francais, "fr"
+text.keywords(lang: :fr).top(3).join " "
+
+# Prints "interesting mister"
+```
+
 ## Install
 
 * `[sudo] gem install highscore`
