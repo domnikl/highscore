@@ -9,7 +9,7 @@ Easily find and rank keywords in long texts.
 * configurable to rank different types of words different (uppercase, long words, etc.)
 * rate based on amount (%) of vowels and consonants in a string
 * directly get keywords from String objects
-* blacklist words via a plain text file, String or an Array of words
+* blacklist words via a plain text file, String or an Array of words (per language if needed)
 * optionally, configure a whitelist and only words from that list will get ranked
 * use word stemming (requires the `fast-stemmer` gem, or the `stemmer` gem)
 * merge together Keywords from multiple sources
