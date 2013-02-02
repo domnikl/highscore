@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.executables = ["highscore"]
   s.extra_rdoc_files = ["History.txt", "lib/blacklist.txt"]
   s.files = Dir.glob("{bin,lib,test}/**/*") + %w(README.md History.txt Rakefile version.txt)
-  s.homepage = "https://domnikl.github.com/highscore"
+  s.homepage = "http://domnikl.github.com/highscore"
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
   s.rubyforge_project = "highscore"
