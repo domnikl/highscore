@@ -1,3 +1,9 @@
+== 1.0.0 / 2013-02-02
+
+* added per-language support for black- and whitelists (thanks to bobjflong)
+* added support for language recognition
+* fixed tokenization for UTF-8 strings (this is broken in Ruby 1.8.x!) (thanks to pdg)
+
 == 0.5.2 / 2012-02-25
 
 * added (optional) support for word stemming using the fast-stemmer gem

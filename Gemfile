@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+gem 'whatlanguage'
+gem 'rake'
+gem 'simplecov'
+gem 'stemmer'

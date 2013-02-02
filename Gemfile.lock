@@ -1,0 +1,9 @@
+GEM
+  specs:
+    whatlanguage (1.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  whatlanguage

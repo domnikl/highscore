@@ -1,8 +1,6 @@
-$:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
-require "wordlist"
-require "test/unit"
+require File.dirname(__FILE__) + '/../test_highscore'
 
-class TestBlacklist < Test::Unit::TestCase
+class TestBlacklist < Highscore::TestCase
 
   def test_load_file
     file_path = File.join(File.dirname(__FILE__), %w{.. fixtures blacklist.txt})

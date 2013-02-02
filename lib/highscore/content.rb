@@ -7,12 +7,14 @@ require 'rubygems'
 module Highscore
   class Content
     attr_reader :content
+    attr_accessor :language_wordlists
 
     # @param content String
     # @param wordlist Highscore::Wordlist
     def initialize(content, wordlist = nil)
       @content = content
       @whitelist = @blacklist = nil
+      @language_wordlists = {}
 
       if wordlist.nil?
         @blacklist = Highscore::Blacklist.load_default_file
@@ -31,9 +33,13 @@ module Highscore
         :consonants => 0,
         :ignore_short_words => true,
         :ignore_case => false,
-        :word_pattern => /\w+/,
+        :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
+      
+      if RUBY_VERSION =~ /^1\.8/
+        @emphasis[:word_pattern] = /\w+/
+      end
     end
 
     # configure ranking
@@ -50,16 +56,32 @@ module Highscore
     def set(key, value)
       @emphasis[key.to_sym] = value
     end
+    
+    # add another wordlist, given a language
+    #
+    # @param language_wordlist Highscore::Wordlist
+    # @param language String
+    def add_wordlist(language_wordlist, language)
+      raise ArgumentError, "Not a valid Wordlist" unless language_wordlist.kind_of? Highscore::Wordlist
+      language_wordlists[language.to_sym] = language_wordlist
+    end
 
     # get the ranked keywords
     #
     # @return Highscore::Keywords
-    def keywords
+    def keywords(opts = {})
+      used_wordlist = nil
+      if opts[:lang]
+        used_wordlist = language_wordlists[opts[:lang].to_sym]
+      else
+        used_wordlist = wordlist
+      end
+        
       @emphasis[:stemming] = use_stemming?
 
       keywords = Keywords.new
 
-      Keywords.find_keywords(processed_content, wordlist, word_pattern).each do |text|
+      Keywords.find_keywords(processed_content, used_wordlist, word_pattern).each do |text|
         text = text.to_s
         text = text.stem if @emphasis[:stemming]
 
@@ -82,6 +104,14 @@ module Highscore
       else
         @blacklist
       end
+    end
+
+    # guess the language of the content and return a symbol for it
+    # => done via whatlanguage gem
+    #
+    # @return Symbol
+    def language
+      @content.language
     end
 
     private
@@ -148,8 +178,6 @@ module Highscore
       percent * @emphasis[:consonants]
     end
 
-    private
-
     # using stemming is only possible, if fast-stemmer is installed
     # doesn't work for JRuby
     def use_stemming?
@@ -158,7 +186,12 @@ module Highscore
           require 'fast_stemmer'
           true
         rescue LoadError
-          false
+          begin
+            require 'stemmer'
+            true
+          rescue LoadError
+            false
+          end
         end
       else
         false

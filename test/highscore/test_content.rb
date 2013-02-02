@@ -1,9 +1,10 @@
+# encoding: utf-8
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
 require "test/unit"
 require 'rubygems'
 
-class TestContent < Test::Unit::TestCase
+class TestContent < Highscore::TestCase
   def setup
     @text = "This is some text"
     @content = Highscore::Content.new(@text)
@@ -30,6 +31,19 @@ class TestContent < Test::Unit::TestCase
 
     content = Highscore::Content.new content
     assert_equal 1, content.keywords.length
+  end
+
+  def test_keywords_utf8
+    content = 'Schöne Grüße, caractères, русский'
+
+    content = Highscore::Content.new content
+    
+    if RUBY_VERSION =~ /^1\.8/
+      # Ruby 1.8 doesn't support correct tokenization
+      assert_equal 3, content.keywords.length
+    else
+      assert_equal 4, content.keywords.length
+    end
   end
 
   def test_vowels_and_consonants
@@ -77,9 +91,22 @@ class TestContent < Test::Unit::TestCase
   end
 
   def test_stemming
+    loaded_stemmer = false
+
     begin
       require 'fast_stemmer'
+      loaded_stemmer = true
+    rescue LoadError
+      begin
+        require 'stemmer'
+        loaded_stemmer = true
+      rescue LoadError
+        # skip this test, neither fast_stemmer nor stemmer is installed!
+        fail
+      end
+    end
 
+    if loaded_stemmer
       keywords = 'word words boards board woerter wort'.keywords do
         set :stemming, true
       end
@@ -87,10 +114,17 @@ class TestContent < Test::Unit::TestCase
       assert_equal 4, keywords.length
 
       keywords.each do |k|
-        assert (%w{board word woerter wort}).include?(k.text)
+        assert %w{board word woerter wort}.include?(k.text)
       end
-    rescue LoadError
-      # do nothing, just skip this test
     end
   end
+  
+  def test_language_english
+    assert_equal :english, Highscore::Content.new("this is obviously an english text").language
+  end
+  
+  def test_language_german
+    assert_equal :german, Highscore::Content.new("Das ist sicherlich ein deutscher Text!").language
+  end
 end
+

@@ -1,6 +1,6 @@
 # general
 .DS_Store
-*.gemspec
+*.gem
 
 # RubyMine
 .idea

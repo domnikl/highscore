@@ -1,3 +1,5 @@
+require 'whatlanguage'
+
 # monkey patch to call custom methods on arbitrary strings
 #
 class String

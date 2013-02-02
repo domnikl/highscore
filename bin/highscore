@@ -76,6 +76,11 @@ optparse = OptionParser.new do |opts|
   opts.on('-s', '--short', 'don\'t print rank weight') do
     options[:short] = true
   end
+  
+  opts.on('-v', '--version', 'show version') do
+    puts Highscore::VERSION
+    exit
+  end
 end
 
 optparse.parse!

@@ -9,7 +9,9 @@ rvm:
   - rbx-19mode
 
 # fast-stemmer is a C extension, so it won't work with JRuby ...
-before_install: gem install bones; (gem install fast-stemmer &); sleep 10
+
+# stemmer is the port that works for JRuby
+before_install: (gem install fast-stemmer &); (gem install stemmer &); bundle install; sleep 10
 notifications:
   recipients:
     - liebler.dominik@googlemail.com

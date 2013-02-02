@@ -1,24 +1,21 @@
-highscore
-===========
+# highscore
 
 Easily find and rank keywords in long texts.
 
-[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore)
+[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/domnikl/highscore)
 
-Features
---------
+## Features
 
 * configurable to rank different types of words different (uppercase, long words, etc.)
 * rate based on amount (%) of vowels and consonants in a string
 * directly get keywords from String objects
-* blacklist words via a plain text file, String or an Array of words
+* blacklist words via a plain text file, String or an Array of words (per language if needed)
 * optionally, configure a whitelist and only words from that list will get ranked
-* use word stemming (requires the fast-stemmer gem, doesn't work on JRuby platforms!)
+* use word stemming (requires the `fast-stemmer` gem, or the `stemmer` gem)
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 
-Examples
---------
+## Examples
 
 ```ruby
 text = Highscore::Content.new "foo bar"
@@ -64,8 +61,7 @@ end
 
 Have a look at bin/highscore, you can run highscore on your CLI and feed it with text on STDIN.
 
-Using a custom blacklist to ignore keywords
--------------------------------------------
+## Using a custom blacklist to ignore keywords
 
 ```ruby
 # setting single words
@@ -86,8 +82,7 @@ blacklist = Highscore::Blacklist.load_default_file
 content = Highscore::Content.new "a string", blacklist
 ```
 
-Using a whitelist instead of ranking all words
-----------------------------------------------
+## Using a whitelist instead of ranking all words
 
 ```ruby
 # construct and inject it just like a blacklist
@@ -95,22 +90,38 @@ whitelist = Highscore::Whitelist.load %w{these are valid keywords}
 content = Highscore::Content.new "invalid words", whitelist
 ```
 
-Install
--------
+## Multiple languages
+
+```ruby
+# Load a default blacklist
+blacklist_default = Highscore::Blacklist.load "mister"
+text = Highscore::Content.new "oui mister interesting", blacklist_default
+text.keywords.top(3).join " "
+
+# Prints "interesting oui"
+
+# Load a rudimentary blacklist for French
+blacklist_francais = Highscore::Blacklist.load "oui"
+text.add_wordlist blacklist_francais, "fr"
+text.keywords(:lang => :fr).top(3).join " "
+
+# Prints "interesting mister"
+```
+
+## Install
 
 * `[sudo] gem install highscore`
 
-To use word stemming, you need to have the fast-stemmer gem installed:
+To use word stemming, you need to have the `fast-stemmer` (C extension) or `stemmer` gem installed:
 
 * `[sudo] gem install fast-stemmer`
+* `[sudo] gem install stemmer`
 
-Author
-------
+## Author
 
 Original author: Dominik Liebler <liebler.dominik@googlemail.com>
 
-License
--------
+## License
 
 (The MIT License)
 
