@@ -178,7 +178,7 @@ module Highscore
       percent * @emphasis[:consonants]
     end
 
-    # using stemming is only possible, if fast-stemmer is installed
+    # using stemming is only possible if fast-stemmer is installed
     # doesn't work for JRuby
     def use_stemming?
       if @emphasis[:stemming]
