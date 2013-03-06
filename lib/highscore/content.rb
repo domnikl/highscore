@@ -71,6 +71,7 @@ module Highscore
     # @return Highscore::Keywords
     def keywords(opts = {})
       used_wordlist = nil
+
       if opts[:lang]
         used_wordlist = language_wordlists[opts[:lang].to_sym]
       else
@@ -80,16 +81,9 @@ module Highscore
       @emphasis[:stemming] = use_stemming?
 
       keywords = Keywords.new
-
-      Keywords.find_keywords(processed_content, used_wordlist, word_pattern).each do |text|
-        text = text.to_s
-        text = text.stem if @emphasis[:stemming]
-
-        if not (text.match(/^[\d]+(\.[\d]+){0,1}$/) or text.length <= 2)
-          keywords << Highscore::Keyword.new(text, weight(text))
-        elsif allow_short_words
-          keywords << Highscore::Keyword.new(text, weight(text))
-        end
+      Keywords.find_keywords(processed_content, used_wordlist, word_pattern).each do |word|
+        keyword = extract_keyword(word)
+        keywords << keyword unless keyword.nil?
       end
 
       keywords
@@ -115,6 +109,20 @@ module Highscore
     end
 
     private
+
+    # extracts a single keyword from a single word
+    # 
+    # @return Highscore::Keyword
+    def extract_keyword word
+      word = word.to_s
+      word = word.stem if @emphasis[:stemming]
+
+      if not (word.match(/^[\d]+(\.[\d]+){0,1}$/) or word.length <= 2)
+        Highscore::Keyword.new(word, weight(word))
+      elsif allow_short_words
+	Highscore::Keyword.new(word, weight(word))
+      end
+    end
 
     # processes the text content applying any necessary transformations
     #
