@@ -93,10 +93,10 @@ module Highscore
     #
     # @return Highscore::Wordlist
     def wordlist
-      unless @whitelist.nil?
-        @whitelist
-      else
+      if @whitelist.nil?
         @blacklist
+      else
+        @whitelist
       end
     end
 
@@ -117,10 +117,8 @@ module Highscore
       word = word.to_s
       word = word.stem if @emphasis[:stemming]
 
-      if not (word.match(/^[\d]+(\.[\d]+){0,1}$/) or word.length <= 2)
+      if not word.short? or allow_short_words
         Highscore::Keyword.new(word, weight(word))
-      elsif allow_short_words
-	Highscore::Keyword.new(word, weight(word))
       end
     end
 
@@ -164,8 +162,7 @@ module Highscore
       end
 
       weight += vowels(text)
-      weight += consonants(text)
-      weight
+      weight + consonants(text)
     end
 
     # weight the vowels on a text
@@ -186,24 +183,25 @@ module Highscore
       percent * @emphasis[:consonants]
     end
 
-    # using stemming is only possible if fast-stemmer is installed
-    # doesn't work for JRuby
+    # Internal: using stemming is only possible if fast-stemmer is installed
+    #           doesn't work for JRuby
+    #
+    # @return TrueClass|FalseClass
     def use_stemming?
-      if @emphasis[:stemming]
+      return false unless @emphasis[:stemming]
+
+      gems = %w(fast_stemmer stemmer)
+
+      gems.each do |gem|
         begin
-          require 'fast_stemmer'
-          true
+          require gem
+          return true
         rescue LoadError
-          begin
-            require 'stemmer'
-            true
-          rescue LoadError
-            false
-          end
+          false
         end
-      else
-        false
       end
     end
+
+
   end
 end

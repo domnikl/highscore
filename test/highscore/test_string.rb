@@ -41,4 +41,9 @@ class TestString < Highscore::TestCase
     assert_equal 90, keywords.first.weight
     assert_equal 30, keywords.last.weight
   end
+
+  def test_short?
+    assert "to".short?
+    assert (not "this ain't no short word".short?)
+  end
 end

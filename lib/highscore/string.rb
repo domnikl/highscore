@@ -34,4 +34,11 @@ class String
   def consonants
     gsub(/[aeiou]/, '')
   end
+
+  # is this a short word?
+  #
+  # @return TrueClass|FalseClass
+  def short?
+    match(/^[\d]+(\.[\d]+){0,1}$/) or length <= 2
+  end
 end
