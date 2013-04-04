@@ -167,6 +167,8 @@ module Highscore
     # @param text String
     # @return Float
     def vowels(text)
+      return 0 if @emphasis[:vowels] == 0
+      
       percent = text.vowels.length / text.length.to_f
       percent * @emphasis[:vowels]
     end
@@ -176,6 +178,8 @@ module Highscore
     # @param text String
     # @return Float
     def consonants(text)
+      return 0 if @emphasis[:consonants] == 0
+      
       percent = text.consonants.length / text.length.to_f
       percent * @emphasis[:consonants]
     end

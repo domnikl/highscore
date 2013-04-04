@@ -62,7 +62,7 @@ module Highscore
     #
     # @param keyword String
     # @return true/false
-    def include? keyword
+    def include?(keyword)
       @words.include? keyword
     end
 

@@ -1,6 +1,3 @@
-# external
-require 'digest/sha1'
-
 module Highscore
 
   # keywords that were found in content
@@ -16,14 +13,11 @@ module Highscore
     # @return Highscore::Keywords
     def self.find_keywords content, wordlist, pattern=/\w+/
       keywords = content.to_s.scan(pattern).flatten
-      keywords.delete_if do |key, value|
-        if wordlist.kind_of? Highscore::Blacklist
-          wordlist.include?(key.downcase)
-        elsif wordlist.kind_of? Highscore::Whitelist
-          not wordlist.include?(key.downcase)
-        end
+      
+      if not wordlist.nil? and wordlist.respond_to? :filter
+        keywords = wordlist.filter(keywords)
       end
-
+      
       keywords.sort
     end
 
@@ -51,15 +45,13 @@ module Highscore
 
     # add new keywords
     #
-    # @param keyword String
+    # @param keyword Highscore::Keyword
     # @return Highscore::Keywords
     def <<(keyword)
-      key = Digest::SHA1.hexdigest(keyword.text)
-
-      if @keywords.has_key?(key)
-        @keywords[key].weight += keyword.weight
+      if @keywords.has_key?(keyword.text)
+        @keywords[keyword.text].weight += keyword.weight
       else
-        @keywords[key] = keyword
+        @keywords[keyword.text] = keyword
       end
 
       @keywords
