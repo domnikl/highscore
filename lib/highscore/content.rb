@@ -1,9 +1,6 @@
 $:.unshift(File.dirname(__FILE__))
 require 'keywords'
 
-# external gems
-require 'rubygems'
-
 module Highscore
   class Content
     attr_reader :content
