@@ -33,10 +33,6 @@ module Highscore
         :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
-      
-      if RUBY_VERSION =~ /^1\.8/
-        @emphasis[:word_pattern] = /\w+/
-      end
     end
 
     # configure ranking

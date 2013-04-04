@@ -37,13 +37,7 @@ class TestContent < Highscore::TestCase
     content = 'Schöne Grüße, caractères, русский'
 
     content = Highscore::Content.new content
-    
-    if RUBY_VERSION =~ /^1\.8/
-      # Ruby 1.8 doesn't support correct tokenization
-      assert_equal 3, content.keywords.length
-    else
-      assert_equal 4, content.keywords.length
-    end
+    assert_equal 4, content.keywords.length
   end
 
   def test_vowels_and_consonants

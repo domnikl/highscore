@@ -54,4 +54,12 @@ class TestBlacklist < Highscore::TestCase
     assert blacklist.include?("foobar")
     assert !blacklist.include?("bla")
   end
+  
+  def test_each
+    blacklist = Highscore::Wordlist.load "foo bar baz"
+    
+    a = []
+    blacklist.each { |x| a << x }
+    assert_equal ['foo', 'bar', 'baz'], a
+  end
 end
