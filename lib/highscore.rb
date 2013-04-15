@@ -1,5 +1,3 @@
-require 'rubygems' if RUBY_VERSION !~ /^1\.9/
-
 module Highscore
   # :stopdoc:
   LIBPATH = ::File.expand_path('..', __FILE__) + ::File::SEPARATOR
