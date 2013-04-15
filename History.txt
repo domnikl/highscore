@@ -1,3 +1,9 @@
+== 1.1.0 / 2013-04-
+
+* fixed some performance issues with unnecessary ranking by unused criteria (consonants & vowels)
+* added possibility to use bloomfilters for faster performance instead of Array#include?
+* removed compatibility with Ruby 1.8.x
+
 == 1.0.0 / 2013-02-02
 
 * added per-language support for black- and whitelists (thanks to bobjflong)

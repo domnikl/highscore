@@ -14,6 +14,7 @@ Easily find and rank keywords in long texts.
 * use word stemming (requires the `fast-stemmer` gem, or the `stemmer` gem)
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
+* can use `bloomfilter-rb` gem for better performance (optional)
 
 ## Examples
 
@@ -117,6 +118,10 @@ To use word stemming, you need to have the `fast-stemmer` (C extension) or `stem
 * `[sudo] gem install fast-stemmer`
 * `[sudo] gem install stemmer`
 
+For better perfomance, use the `bloomfilter-rb` gem:
+
+* `[sudo] gem install bloomfilter-rb`
+
 ## Author
 
 Original author: Dominik Liebler <liebler.dominik@googlemail.com>
@@ -125,7 +130,7 @@ Original author: Dominik Liebler <liebler.dominik@googlemail.com>
 
 (The MIT License)
 
-Copyright (c) 2012 Dominik Liebler
+Copyright (c) 2013 Dominik Liebler
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
