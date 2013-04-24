@@ -30,4 +30,12 @@ class TestKeyword < Highscore::TestCase
     @keyword.weight = 10.123
     assert_equal 10.123, @keyword.weight
   end
+  
+  def test_percent
+    # per default, percent is not used => nil
+    assert_nil @keyword.percent
+    
+    @keyword.percent = 50.1
+    assert_equal 50.1, @keyword.percent
+  end
 end

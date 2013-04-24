@@ -27,8 +27,7 @@ module Highscore
       @keywords = {}
     end
 
-    # ranks the keywords and removes keywords that have a low ranking
-    # or are blacklisted
+    # ranks the keywords
     #
     # @return Array
     def rank
@@ -40,7 +39,15 @@ module Highscore
     # @param n Fixnum
     # @return Array
     def top n = 10
-      rank[0..(n - 1)]
+      tops = rank[0..(n - 1)]
+      sum_all = sum(n)
+      
+      # set percentage values
+      tops.each do |keyword|
+        keyword.percent = keyword.weight * 100 / sum_all
+      end
+      
+      tops
     end
 
     # add new keywords
@@ -92,6 +99,14 @@ module Highscore
     # @return Highscore::Keyword
     def last
       sort.reverse.first
+    end
+
+    # Returns the sum of the weight of the top n keywords
+    #
+    # @return Float
+    def sum(n)
+      top = rank[0..(n - 1)]
+      top.map(&:weight).inject { |sum,weight| sum + weight }
     end
 
     # merge in another keyword list, operates on self

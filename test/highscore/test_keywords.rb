@@ -51,8 +51,24 @@ class TestKeywords < Highscore::TestCase
   def test_top
     top = @keywords.top(1)
 
+    assert_equal(1, top.length)
     assert_equal('the', top[0].text)
     assert_equal(10.0, top[0].weight)
+    assert_equal(100.0, top[0].percent)
+  end
+  
+  def test_percent
+    top = @keywords.top(10)
+    
+    assert_equal 4, top.length
+    assert_equal 62.5, top[0].percent
+    assert_equal 18.75, top[1].percent
+    assert_equal 12.5, top[2].percent
+    assert_equal 6.25, top[3].percent
+  end
+  
+  def test_sum
+    assert_equal(16, @keywords.sum(50))
   end
 
   def test_top_empty
