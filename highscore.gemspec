@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency('simplecov', [">= 0.6.4"])
       s.add_dependency('whatlanguage', ['>=1.0.0'])
+      s.add_dependency('bloomfilter-rb', ['>=2.1.1'])
     end
   else
     s.add_dependency('simplecov', [">= 0.6.4"])
