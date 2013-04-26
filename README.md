@@ -38,7 +38,7 @@ text.keywords.top(50).each do |keyword|
   keyword.weight # => rank weight (float)
 end
 
-# you could just use a string
+# you could also just use a string
 keywords = "Foo bar baz".keywords(blacklist) do
   set :multiplier, 10
 end
@@ -60,9 +60,11 @@ end
 # not 1.0
 ```
 
-Have a look at bin/highscore, you can run highscore on your CLI and feed it with text on STDIN.
+Have a look at `bin/highscore`, you can run highscore on your CLI and feed it with text on STDIN.
 
-## Using a custom blacklist to ignore keywords
+## Blacklisting and Whitelisting
+
+### Using a custom blacklist to ignore keywords
 
 ```ruby
 # setting single words
@@ -83,7 +85,7 @@ blacklist = Highscore::Blacklist.load_default_file
 content = Highscore::Content.new "a string", blacklist
 ```
 
-## Using a whitelist instead of ranking all words
+### Using a whitelist instead of ranking all words
 
 ```ruby
 # construct and inject it just like a blacklist
@@ -91,7 +93,7 @@ whitelist = Highscore::Whitelist.load %w{these are valid keywords}
 content = Highscore::Content.new "invalid words", whitelist
 ```
 
-## Multiple languages
+## I18n
 
 ```ruby
 # Load a default blacklist
@@ -99,14 +101,14 @@ blacklist_default = Highscore::Blacklist.load "mister"
 text = Highscore::Content.new "oui mister interesting", blacklist_default
 text.keywords.top(3).join " "
 
-# Prints "interesting oui"
+# => prints "interesting oui"
 
 # Load a rudimentary blacklist for French
 blacklist_francais = Highscore::Blacklist.load "oui"
-text.add_wordlist blacklist_francais, "fr"
+text.add_wordlist blacklist_francais, :french
 text.keywords(:lang => :fr).top(3).join " "
 
-# Prints "interesting mister"
+# => prints "interesting mister"
 ```
 
 ## Install
@@ -118,7 +120,7 @@ To use word stemming, you need to have the `fast-stemmer` (C extension) or `stem
 * `[sudo] gem install fast-stemmer`
 * `[sudo] gem install stemmer`
 
-For better perfomance, use the `bloomfilter-rb` gem:
+For better blacklist perfomance, use the `bloomfilter-rb` gem:
 
 * `[sudo] gem install bloomfilter-rb`
 

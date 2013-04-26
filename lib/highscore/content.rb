@@ -30,6 +30,7 @@ module Highscore
         :consonants => 0,
         :ignore_short_words => true,
         :ignore_case => false,
+        :ignore => nil,
         :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
@@ -110,9 +111,26 @@ module Highscore
       word = word.to_s
       word = word.stem if @emphasis[:stemming]
 
-      if not word.short? or allow_short_words
+      unless ignore?(word)
         Highscore::Keyword.new(word, weight(word))
       end
+    end
+
+    # Internal: should the word be ignored or not?
+    #
+    # @return TrueClass FalseClass
+    def ignore? word
+      ignore = word.short?
+
+      # exception: allow short words
+      ignore = (not allow_short_words?) if ignore
+
+      # exception: custom handler
+      unless @emphasis[:ignore].nil?
+        ignore = @emphasis[:ignore].call(word)
+      end
+
+      ignore
     end
 
     # processes the text content applying any necessary transformations
@@ -127,8 +145,8 @@ module Highscore
 
     # allow short words to be rated
     #
-    # @return TrueClass FalseClass
-    def allow_short_words
+    # @return TrueClass|FalseClass
+    def allow_short_words?
       not @emphasis[:ignore_short_words]
     end
 

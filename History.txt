@@ -1,5 +1,6 @@
 == 1.1.0 / 2013-04-
 
+* added support for custom word ignore handlers using lambda functions
 * fixed some performance issues with unnecessary ranking by unused criteria (consonants & vowels)
 * added possibility to use bloomfilters for faster performance instead of Array#include?
 * removed compatibility with Ruby 1.8.x
