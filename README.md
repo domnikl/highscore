@@ -11,10 +11,23 @@ Easily find and rank keywords in long texts.
 * directly get keywords from String objects
 * blacklist words via a plain text file, String or an Array of words (per language if needed)
 * optionally, configure a whitelist and only words from that list will get ranked
-* use word stemming (requires the `fast-stemmer` gem, or the `stemmer` gem)
+* uses word stemming if necessary (requires the `fast-stemmer` or `stemmer` gem)
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 * can use `bloomfilter-rb` gem for better performance (optional)
+
+## Installation
+
+* `[sudo] gem install highscore`
+
+For better blacklist perfomance, use the `bloomfilter-rb` gem:
+
+* `[sudo] gem install bloomfilter-rb`
+
+To use word stemming, you need to have the `fast-stemmer` (C extension) or `stemmer` gem installed:
+
+* `[sudo] gem install fast-stemmer`
+* `[sudo] gem install stemmer`
 
 ## Examples
 
@@ -111,22 +124,9 @@ text.keywords(:lang => :fr).top(3).join " "
 # => prints "interesting mister"
 ```
 
-## Install
-
-* `[sudo] gem install highscore`
-
-To use word stemming, you need to have the `fast-stemmer` (C extension) or `stemmer` gem installed:
-
-* `[sudo] gem install fast-stemmer`
-* `[sudo] gem install stemmer`
-
-For better blacklist perfomance, use the `bloomfilter-rb` gem:
-
-* `[sudo] gem install bloomfilter-rb`
-
 ## Author
 
-Original author: Dominik Liebler <liebler.dominik@googlemail.com>
+Original author: Dominik Liebler <liebler.dominik@gmail.com>
 
 ## License
 

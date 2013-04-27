@@ -9,18 +9,22 @@ require "highscore"
 gem_name = "highscore-#{Highscore::VERSION}.gem"
 
 namespace :gem do
+    desc "clean previously generated gems"
     task :clean do
       system "rm -f *.gem"
     end
-  
+    
+    desc "build gem"
     task :build => [:clean, :test] do
       system "gem build highscore.gemspec"
     end
 
+    desc "install gem"
     task :install => :build do
       system "gem install #{gem_name}"
     end
 
+    desc "release to rubygems.org"
     task :release => :build do
       system "gem push #{gem_name}"
     end
