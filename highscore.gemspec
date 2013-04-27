@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dominik Liebler"]
-  s.date = "2012-12-13"
+  s.date = File.mtime('version.txt')
   s.email = "liebler.dominik@googlemail.com"
   s.executables = ["highscore"]
   s.extra_rdoc_files = ["History.txt", "lib/blacklist.txt"]
