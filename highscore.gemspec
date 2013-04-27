@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dominik Liebler"]
   s.date = "2012-12-13"
-  s.description = ""
   s.email = "liebler.dominik@googlemail.com"
   s.executables = ["highscore"]
   s.extra_rdoc_files = ["History.txt", "lib/blacklist.txt"]
@@ -17,7 +16,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = "highscore"
   s.rubygems_version = "1.8.16"
-  s.summary = ""
   s.test_files = Dir.glob('test/**/*')
   s.description = "Find and rank keywords in text."
   s.summary = "Easily find and rank keywords in long texts."
