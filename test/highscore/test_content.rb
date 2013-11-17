@@ -60,6 +60,14 @@ class TestContent < Highscore::TestCase
     assert_equal 4, keywords.length
   end
 
+  def test_rank_short_words_limit
+    keywords = '56789 as 444 cat is foobar'.keywords do
+      set :short_word_threshold, 3
+    end
+
+    assert_equal 1, keywords.length
+  end
+
   def test_ignore_custom
     keywords = 'foobar a3832'.keywords do
       set :ignore, lambda { |w| w.gsub(/[^0-9]/, '').length > 2 }

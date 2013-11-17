@@ -39,6 +39,6 @@ class String
   #
   # @return TrueClass|FalseClass
   def short?(limit=2)
-    match(/^[\d]+(\.[\d]+){0,limit}$/) or length <= limit
+    match(/^[\d]+(\.[\d]+){0,#{limit - 1}}$/) or length <= limit
   end
 end
