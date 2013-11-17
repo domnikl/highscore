@@ -38,7 +38,7 @@ class String
   # is this a short word?
   #
   # @return TrueClass|FalseClass
-  def short?
-    match(/^[\d]+(\.[\d]+){0,1}$/) or length <= 2
+  def short?(limit=2)
+    match(/^[\d]+(\.[\d]+){0,limit}$/) or length <= limit
   end
 end
