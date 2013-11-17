@@ -62,7 +62,7 @@ class TestContent < Highscore::TestCase
 
   def test_rank_short_words_limit
     keywords = '56789 as 444 cat is foobar'.keywords do
-      set :short_word_threshold, 3
+      set :short_words_threshold, 3
     end
 
     assert_equal 1, keywords.length

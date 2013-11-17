@@ -39,7 +39,7 @@ text.configure do
   set :upper_case, 3
   set :long_words, 2
   set :long_words_threshold, 15
-  set :short_word_threshold, 3       # => default: 2
+  set :short_words_threshold, 3      # => default: 2
   set :bonus_multiplier, 2           # => default: 3
   set :vowels, 1                     # => default: 0 = not considered
   set :consonants, 5                 # => default: 0 = not considered

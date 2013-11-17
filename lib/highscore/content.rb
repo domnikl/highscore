@@ -27,7 +27,7 @@ module Highscore
         :multiplier => 1.0,
         :upper_case => 3.0,
         :long_words => 2.0,
-        :short_word_threshold => 2,
+        :short_words_threshold => 2,
         :bonus_multiplier => 3.0,
         :bonus_list => bonuslist,
         :long_words_threshold => 15,
@@ -126,7 +126,7 @@ module Highscore
     #
     # @return TrueClass FalseClass
     def ignore? word
-      ignore = word.short?(@emphasis[:short_word_threshold])
+      ignore = word.short?(@emphasis[:short_words_threshold])
 
       # exception: allow short words
       ignore = (not allow_short_words?) if ignore
