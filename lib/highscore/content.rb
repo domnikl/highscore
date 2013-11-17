@@ -10,13 +10,15 @@ module Highscore
     # @param wordlist Highscore::Wordlist
     def initialize(content, wordlist = nil)
       @content = content
-      @whitelist = @blacklist = nil
+      @whitelist = @blacklist = bonuslist = nil
       @language_wordlists = {}
 
       if wordlist.nil?
         @blacklist = Highscore::Blacklist.load_default_file
       elsif wordlist.kind_of? Highscore::Blacklist
         @blacklist = wordlist
+      elsif wordlist.kind_of? Highscore::Bonuslist
+        bonuslist = wordlist
       else
         @whitelist = wordlist
       end
@@ -25,6 +27,8 @@ module Highscore
         :multiplier => 1.0,
         :upper_case => 3.0,
         :long_words => 2.0,
+        :bonus_multiplier => 3.0,
+        :bonus_list => bonuslist,
         :long_words_threshold => 15,
         :vowels => 0,
         :consonants => 0,
@@ -34,6 +38,7 @@ module Highscore
         :word_pattern => /\p{Word}+/u,
         :stemming => false
       }
+
     end
 
     # configure ranking
@@ -172,8 +177,17 @@ module Highscore
         weight *= @emphasis[:upper_case]
       end
 
+      weight += bonus(text)
       weight += vowels(text)
       weight + consonants(text)
+    end
+
+    def bonus(text)
+      return 0 if not @emphasis[:bonus_list].kind_of? Highscore::Bonuslist
+      if @emphasis[:bonus_list].include?(text)
+        return @emphasis[:multiplier] * @emphasis[:bonus_multiplier]
+      end
+      return 0
     end
 
     # weight the vowels on a text
