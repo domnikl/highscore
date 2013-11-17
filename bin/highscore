@@ -26,9 +26,19 @@ optparse = OptionParser.new do |opts|
     options[:wordlist] = Highscore::Whitelist.load_file(filepath)
   end
 
+  # bonus word file
+  opts.on('--bonuslist FILEPATH', 'specify a bonus word file') do |filepath|
+    options[:bonus_list] = Highscore::Bonuslist.load_file(filepath)
+  end
+
   # general multiplier
   opts.on('-m', '--multiplier MULTIPLIER', 'set the global rank multiplier') do |multiplier|
     options[:emphasis][:multiplier] = multiplier.to_f
+  end
+
+  # bonus multiplier
+  opts.on('--bonusmultiplier MULTIPLIER', 'set the bonus word multiplier') do |multiplier|
+    options[:emphasis][:bonus_multiplier] = multiplier.to_f
   end
 
   opts.on('--no-ignore-short', 'don\'t ignore short words (<= 2 chars)') do
@@ -67,6 +77,12 @@ optparse = OptionParser.new do |opts|
   opts.on('-t', '--longwordsthreshold THRESHOLD', 'threshold for long words (default is 15 chars)') do |u|
     options[:emphasis][:long_words_threshold] = u.to_i
   end
+
+  # short words threshold
+  opts.on('--shortwordsthreshold THRESHOLD', 'threshold for short words (default is 2 chars)') do |u|
+    options[:emphasis][:short_words_threshold] = u.to_i
+  end
+
 
   opts.on('-n', '--top N', 'show only the top N keywords') do |u|
     options[:top] = u.to_i

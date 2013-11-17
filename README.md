@@ -15,6 +15,7 @@ Easily find and rank keywords in long texts.
 * merge together Keywords from multiple sources
 * contains a CLI tool that operates on STDIN/OUT and is configurable via parameters
 * can use `bloomfilter-rb` gem for better performance (optional)
+* words on the bonus list will receive a higher score
 
 ## Installation
 
@@ -38,6 +39,8 @@ text.configure do
   set :upper_case, 3
   set :long_words, 2
   set :long_words_threshold, 15
+  set :short_word_threshold, 3       # => default: 2
+  set :bonus_multiplier, 2           # => default: 3
   set :vowels, 1                     # => default: 0 = not considered
   set :consonants, 5                 # => default: 0 = not considered
   set :ignore_case, true             # => default: false
@@ -104,6 +107,14 @@ content = Highscore::Content.new "a string", blacklist
 # construct and inject it just like a blacklist
 whitelist = Highscore::Whitelist.load %w{these are valid keywords}
 content = Highscore::Content.new "invalid words", whitelist
+```
+
+### Using bonus words
+
+```ruby
+# construct and inject it just like a blacklist
+bonuslist = Highscore::Bonuslist.load %w{bonus words}
+content = Highscore::Content.new "A string with bonus words in it", bonuslist
 ```
 
 ## I18n
