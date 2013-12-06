@@ -1,3 +1,9 @@
+== 1.2.0 / 2013-12-06
+
+* configurable minimum word length
+* bonus words get rated higher than normal words (configurable just like blacklists)
+* (Thanks to Tim-B for the new features)
+
 == 1.1.0 / 2013-04-
 
 * added support for custom word ignore handlers using lambda functions
