@@ -1,8 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bloomfilter-rb (2.1.1)
+      redis
     multi_json (1.6.1)
     rake (0.9.2.2)
+    redis (3.0.6)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -14,6 +17,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bloomfilter-rb
   rake
   simplecov
   stemmer
