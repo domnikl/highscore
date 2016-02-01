@@ -24,4 +24,3 @@ module Highscore
 end
 
 Highscore.load_modules
-

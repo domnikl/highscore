@@ -105,7 +105,8 @@ module Highscore
     #
     # @return Symbol
     def language
-      @content.language
+      wl = WhatLanguage.new(:all)
+      wl.language(@content)
     end
 
     private

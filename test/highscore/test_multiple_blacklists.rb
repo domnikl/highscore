@@ -2,10 +2,8 @@ $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
 require "blacklist"
 require "whitelist"
-require "test/unit"
-require 'rubygems'
 
-class TestMultipleBlacklists < Test::Unit::TestCase
+class TestMultipleBlacklists < Highscore::TestCase
   def setup
     @nonsense = "Oui monsieur, je suis un programmer. You OK?"
     
@@ -30,7 +28,7 @@ class TestMultipleBlacklists < Test::Unit::TestCase
   end
   
   def test_bad_wordlist
-    assert_raise ArgumentError do
+    assert_raises ArgumentError do
       @content.add_wordlist 3.14159, "pi"
     end
   end

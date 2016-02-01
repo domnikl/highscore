@@ -8,7 +8,7 @@ class TestKeyword < Highscore::TestCase
   def test_init
 
     # don't allow 'empty' keywords
-    assert_raise(ArgumentError) do
+    assert_raises(ArgumentError) do
       Highscore::Keyword.new
     end
   end

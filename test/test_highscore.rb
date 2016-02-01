@@ -8,12 +8,12 @@ rescue LoadError
 end
 
 require 'highscore'
-require 'test/unit'
+require 'minitest/autorun'
 
 module Highscore
-  class TestCase < Test::Unit::TestCase
+  class TestCase < Minitest::Test
     def test_version
-      assert_not_nil Highscore::VERSION
+      assert (not Highscore::VERSION.nil?)
     end
   end
 end

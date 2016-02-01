@@ -1,8 +1,6 @@
 # encoding: utf-8
 $:.unshift(File.join(File.dirname(__FILE__), %w{.. .. lib highscore}))
 require "content"
-require "test/unit"
-require 'rubygems'
 
 class TestContent < Highscore::TestCase
   def setup
