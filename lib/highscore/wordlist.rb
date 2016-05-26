@@ -10,14 +10,14 @@ module Highscore
     # @return Highscore::Wordlist
     def self.load_file(file_path, use_bloom_filter = true)
       words = File.read(file_path).split(' ')
-      self.load(words)
+      self.load(words, use_bloom_filter)
     end
 
     # load a file or array of words
     #
     # @param data String Array
     # @return Highscore::Wordlist
-    def self.load(data)
+    def self.load(data, use_bloom_filter = true)
       if data.instance_of?(String)
         words = data.split(' ')
       elsif data.instance_of? Array
@@ -28,7 +28,7 @@ module Highscore
 
       words.map! {|x| x.gsub(/[\!\.\:\,\;\-\+]/, '') }
 
-      self.new(words)
+      self.new(words, use_bloom_filter)
     end
 
     attr_reader :words
@@ -37,7 +37,8 @@ module Highscore
     def initialize(words = [], use_bloom_filter = true)
       @words = words
       @bloom_filter = nil
-      
+      @use_bloom_filter = use_bloom_filter
+
       init_bloom_filter
     end
 
@@ -80,11 +81,13 @@ module Highscore
       @words << word
       @bloom_filter << word unless @bloom_filter.nil?
     end
-    
+
   private
-    
+
     # determine whether bloom filters should be used
     def use_bloom_filter
+      return false unless @use_bloom_filter
+
       begin
         require 'bloomfilter-rb'
         true
@@ -92,15 +95,15 @@ module Highscore
         false
       end
     end
-    
+
     # build a bloom filter out of this wordlist to determine faster
     # if words should be black- or whitelisted
     #
     def init_bloom_filter
       return unless use_bloom_filter
-      
+
       n = length # number of filter elements
-    
+
       if n > 0
         b = 4  # bits per bucket
         m = n * b * 10 # number of filter buckets
@@ -112,6 +115,6 @@ module Highscore
         each { |w| @bloom_filter.insert(w) }
       end
     end
-    
+
   end
 end

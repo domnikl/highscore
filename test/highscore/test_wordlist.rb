@@ -54,12 +54,23 @@ class TestBlacklist < Highscore::TestCase
     assert blacklist.include?("foobar")
     assert !blacklist.include?("bla")
   end
-  
+
   def test_each
     blacklist = Highscore::Wordlist.load "foo bar baz"
-    
+
     a = []
     blacklist.each { |x| a << x }
     assert_equal ['foo', 'bar', 'baz'], a
+  end
+
+  def test_use_bloom_filter_flag
+    list = Highscore::Wordlist.load "foo bar baz"
+    assert list.instance_variable_get(:@bloom_filter)
+
+    list = Highscore::Wordlist.load "foo bar baz", true
+    assert list.instance_variable_get(:@bloom_filter)
+
+    list = Highscore::Wordlist.load "foo bar baz", false
+    assert_nil list.instance_variable_get(:@bloom_filter)
   end
 end
