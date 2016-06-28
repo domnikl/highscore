@@ -5,9 +5,10 @@ GEM
       redis
     docile (1.1.5)
     json (1.8.3)
-    rake (10.5.0)
-    redis (3.2.2)
-    simplecov (0.11.1)
+    minitest (5.9.0)
+    rake (11.2.2)
+    redis (3.3.0)
+    simplecov (0.11.2)
       docile (~> 1.1.0)
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
@@ -20,10 +21,11 @@ PLATFORMS
 
 DEPENDENCIES
   bloomfilter-rb
+  minitest
   rake
   simplecov
   stemmer
   whatlanguage
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
