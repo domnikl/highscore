@@ -32,5 +32,4 @@ Gem::Specification.new do |s|
   end
 
   s.add_dependency('whatlanguage', ['>=1.0.0'])
-  s.add_dependency('bloomfilter-rb', ['>=2.1.1'])
 end
