@@ -143,7 +143,7 @@ Original author: Dominik Liebler <liebler.dominik@gmail.com>
 
 (The MIT License)
 
-Copyright (c) 2013 Dominik Liebler
+Copyright (c) 2016 Dominik Liebler and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
