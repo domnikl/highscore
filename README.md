@@ -2,8 +2,7 @@
 
 Easily find and rank keywords in long texts.
 
-[![Build Status](https://secure.travis-ci.org/domnikl/highscore.png?branch=develop)](http://travis-ci.org/domnikl/highscore) [![Code Climate](https://codeclimate.com/github/domnikl/highscore.png)](https://codeclimate.com/github/domnikl/highscore)
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/DominikLiebler)
+*2019-10-19* I archived this project as there hasn't been any recent activity and I have moved on to other projects. You can still download and use it though.
 
 ## Features
 
